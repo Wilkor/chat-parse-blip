@@ -8,15 +8,18 @@
       font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-     
+
     }
+
     .chat-container {
+
       margin: 0 auto;
       padding: 20px;
       background-color: #fff;
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
+
     .messages {
       list-style-type: none;
       margin: 0;
@@ -24,15 +27,18 @@
       max-height: 300px;
       overflow-y: auto;
     }
+
     .message-container {
       display: flex;
       flex-direction: column;
-  
+
       margin-bottom: 15px;
     }
+
     .own .message-container {
       align-items: flex-end;
     }
+
     .message {
       background-color: #e5f6ff;
       color: #333;
@@ -41,29 +47,35 @@
       max-width: 70%;
       word-wrap: break-word;
     }
+
     .own .message {
       background-color: #1976d2;
       color: white;
     }
+
     .own .message {
       align-self: flex-end;
     }
+
     .user-name {
       font-size: 12px;
       font-weight: bold;
       margin-bottom: 4px;
       color: #888;
     }
+
     .input-container {
       display: flex;
       margin-top: 15px;
     }
+
     .input-field {
       flex-grow: 1;
       padding: 10px;
       border: 1px solid #ccc;
       border-radius: 4px;
     }
+
     .input-button {
       padding: 10px 18px;
       background-color: #1976d2;
@@ -72,12 +84,15 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    h1, h2 {
+
+    h1,
+    h2 {
       margin: 0;
       padding: 0;
       font-weight: bold;
       color: #333;
     }
+
     .messages {
       list-style-type: none;
       margin: 0;
@@ -105,7 +120,7 @@
     .messages::-webkit-scrollbar-track {
       background-color: transparent;
     }
-    
+
     .own .message-container {
       display: flex;
       flex-direction: column;
@@ -114,7 +129,8 @@
     }
 
     .own .user-name {
-      text-align: right; /* Alinhar o nome de usuário à direita */
+      text-align: right;
+      /* Alinhar o nome de usuário à direita */
       color: #888;
       font-size: 12px;
       font-weight: bold;
@@ -128,27 +144,32 @@
       padding: 12px 18px;
       max-width: 70%;
       word-wrap: break-word;
-      text-align: right; /* Alinhar a mensagem à direita */
+      text-align: right;
+      /* Alinhar a mensagem à direita */
     }
 
     .own .timestamp {
-      text-align: right; /* Alinhar a data e hora à direita */
+      text-align: right;
+      /* Alinhar a data e hora à direita */
       font-size: 10px;
       color: #888;
       margin-top: 4px;
     }
+
     .own .message-container {
       display: flex;
       flex-direction: column;
       align-items: flex-end;
-      margin-bottom: 5px; /* Espaçamento entre as mensagens */
+      margin-bottom: 5px;
+      /* Espaçamento entre as mensagens */
     }
 
     .other .message-container {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      margin-bottom: 5px; /* Espaçamento entre as mensagens */
+      margin-bottom: 5px;
+      /* Espaçamento entre as mensagens */
     }
 
     .message {
@@ -156,19 +177,22 @@
       padding: 12px 18px;
       max-width: 70%;
       word-wrap: break-word;
-      margin-top: 2px; /* Espaçamento entre a mensagem e a hora */
+      margin-top: 2px;
+      /* Espaçamento entre a mensagem e a hora */
     }
 
     .own .message {
       background-color: #1976d2;
       color: white;
-      text-align: right; /* Alinhar a mensagem do próprio usuário à direita */
+      text-align: right;
+      /* Alinhar a mensagem do próprio usuário à direita */
     }
 
     .other .message {
       background-color: #e5f6ff;
       color: #333;
-      text-align: left; /* Alinhar a mensagem do outro usuário à esquerda */
+      text-align: left;
+      /* Alinhar a mensagem do outro usuário à esquerda */
     }
 
     .timestamp {
@@ -191,10 +215,10 @@
 
     <div id="chat" style="display:none;">
       <div style="display:none;">
-      <h6>Sala: <span id="current-room"></span></h6>
+        <h6>Sala: <span id="current-room"></span></h6>
       </div>
       <ul id="messages" class="messages"></ul>
-
+      <div id="typing-indicator"class="user-name"></div>
       <form class="input-container" id="chat-form">
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
         <button class="input-button" id="submit-button" type="submit">Enviar</button>
@@ -204,6 +228,7 @@
 
   <script>
     const socket = io('https://pontoparse.herokuapp.com/');
+    //const socket = io('http://localhost:3333');
     const messagesElement = document.getElementById('messages');
     const messageInput = document.getElementById('message-input');
 
@@ -218,11 +243,48 @@
       openChat(roomFromURL, nameFromURL);
     }
 
+
+    const typingIndicatorTimeout = 1000; // Tempo em milissegundos para aguardar antes de enviar o evento de "parou de digitar"
+
+    let isTyping = false;
+    let typingTimeout;
+
+    // Listener para detectar quando o usuário começa a digitar
+    messageInput.addEventListener('input', () => {
+     
+      if (!isTyping) {
+        isTyping = true;
+        socket.emit('user typing', nameFromURL, true);
+      }
+
+      clearTimeout(typingTimeout);
+      typingTimeout = setTimeout(() => {
+        isTyping = false;
+        socket.emit('user typing', nameFromURL, false);
+      }, typingIndicatorTimeout);
+    });
+
+
     document.getElementById('submit-button').addEventListener('click', (event) => {
       event.preventDefault();
-      const message = messageInput.value;
+      const timestampOptions = {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        timeZone: 'America/Sao_Paulo'
+      };
+      const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
 
-      if (message.trim() !== '') {
+      const message = {
+        message: messageInput.value,
+        timestamp
+
+      }
+
+      if (message.message.trim() !== '') {
         socket.emit('chat message', message);
         messageInput.value = '';
       }
@@ -281,6 +343,55 @@
       messagesElement.appendChild(messageContainer);
       messagesElement.scrollTop = messagesElement.scrollHeight;
     });
+
+    // Listener para receber o histórico de mensagens em cache
+    socket.on('cached messages', (cachedMessages) => {
+      cachedMessages.forEach((msg) => {
+
+        console.log(msg)
+        addMessageToChat(msg.user, msg.text, msg.timestamp); // Adicione a mensagem com o timestamp
+      });
+    });
+
+    function addMessageToChat(user, text, timestamp) {
+      const messageContainer = document.createElement('div');
+      messageContainer.classList.add('message-container');
+
+      const isOwnMessage = user.toLowerCase() === nameFromURL.toLowerCase();
+      messageContainer.classList.add(isOwnMessage ? 'own' : 'other'); // Adiciona a classe 'own' ou 'other'
+
+      if (!isOwnMessage) {
+        const userNameElement = document.createElement('div');
+        userNameElement.textContent = user;
+        userNameElement.classList.add('user-name');
+        messageContainer.appendChild(userNameElement);
+      }
+
+      const messageElement = document.createElement('div');
+      messageElement.textContent = text;
+      messageElement.classList.add('message');
+      messageContainer.appendChild(messageElement);
+
+      const timestampElement = document.createElement('div');
+      timestampElement.textContent = timestamp;
+      timestampElement.classList.add('timestamp');
+      messageContainer.appendChild(timestampElement);
+
+      messagesElement.appendChild(messageContainer);
+      messagesElement.scrollTop = messagesElement.scrollHeight;
+    }
+
+
+    socket.on('user typing', ({ username, isTyping }) => {
+      const typingIndicator = document.getElementById('typing-indicator');
+
+      if (isTyping) {
+        typingIndicator.textContent = nameFromURL.toLowerCase() === username.toLowerCase() ? '' : `${username} está digitando...`;
+      } else {
+        typingIndicator.textContent = '';
+      }
+    });
+
   </script>
 </body>
 
