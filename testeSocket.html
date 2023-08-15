@@ -15,7 +15,7 @@
 
       margin: 0 auto;
       padding: 20px;
-      background-color: #fff;
+    
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
@@ -24,7 +24,7 @@
       list-style-type: none;
       margin: 0;
       padding: 0;
-      max-height: 300px;
+      height: 800px;
       overflow-y: auto;
     }
 
@@ -97,7 +97,7 @@
       list-style-type: none;
       margin: 0;
       padding: 0;
-      max-height: 300px;
+       height: 600px;
       overflow-y: auto;
       padding-right: 10px;
       scrollbar-width: thin;
@@ -201,6 +201,7 @@
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
+
 </head>
 
 <body>
@@ -221,7 +222,10 @@
       <div id="typing-indicator"class="user-name"></div>
       <form class="input-container" id="chat-form">
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
-        <button class="input-button" id="submit-button" type="submit">Enviar</button>
+        <button class="btn input-button" id="submit-button" type="submit">
+          Enviar
+        </button>
+  
       </form>
     </div>
   </div>
