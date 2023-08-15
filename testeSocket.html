@@ -15,7 +15,7 @@
 
       margin: 0 auto;
       padding: 20px;
-    
+
       border-radius: 10px;
       box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
@@ -97,7 +97,7 @@
       list-style-type: none;
       margin: 0;
       padding: 0;
-       height: 600px;
+      height: 600px;
       overflow-y: auto;
       padding-right: 10px;
       scrollbar-width: thin;
@@ -199,6 +199,19 @@
       font-size: 10px;
       color: #888;
     }
+
+    .system-message {
+      text-align: left;
+      margin-bottom: 10px;
+    }
+
+    .system-message-text {
+  
+      border-radius: 8px;
+      padding: 8px 12px;
+      max-width: 70%;
+      word-wrap: break-word;
+    }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
 
@@ -219,20 +232,20 @@
         <h6>Sala: <span id="current-room"></span></h6>
       </div>
       <ul id="messages" class="messages"></ul>
-      <div id="typing-indicator"class="user-name"></div>
+      <div id="typing-indicator" class="user-name"></div>
       <form class="input-container" id="chat-form">
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
         <button class="btn input-button" id="submit-button" type="submit">
           Enviar
         </button>
-  
+
       </form>
     </div>
   </div>
 
   <script>
-    const socket = io('https://pontoparse.herokuapp.com/');
-    //const socket = io('http://localhost:3333');
+    //const socket = io('https://pontoparse.herokuapp.com/');
+    const socket = io('http://localhost:3333');
     const messagesElement = document.getElementById('messages');
     const messageInput = document.getElementById('message-input');
 
@@ -255,7 +268,7 @@
 
     // Listener para detectar quando o usuário começa a digitar
     messageInput.addEventListener('input', () => {
-     
+
       if (!isTyping) {
         isTyping = true;
         socket.emit('user typing', nameFromURL, true);
@@ -305,6 +318,8 @@
 
     function openChat(room, name) {
       socket.emit('join room', { room, name });
+
+      addSystemMessage(`${name} entrou na sala.`);
 
       document.querySelector('.input-container').style.display = 'none';
       document.getElementById('chat').style.display = 'block';
@@ -384,6 +399,29 @@
       messagesElement.appendChild(messageContainer);
       messagesElement.scrollTop = messagesElement.scrollHeight;
     }
+
+    function addSystemMessage(message) {
+      const messageContainer = document.createElement('div');
+      messageContainer.classList.add('user-name', 'system-message'); // Adiciona a classe 'system-message'
+
+      const messageElement = document.createElement('div');
+      messageElement.textContent = message;
+      messageElement.classList.add('user-name', 'system-message-text'); // Adiciona a classe 'system-message-text'
+      messageContainer.appendChild(messageElement);
+
+      messagesElement.appendChild(messageContainer);
+      messagesElement.scrollTop = messagesElement.scrollHeight;
+    }
+
+    // Evento para notificar quando um usuário entra na sala
+    socket.on('user joined', (username) => {
+      addSystemMessage(`📍${username} entrou.`);
+    });
+
+    // Evento para notificar quando um usuário sai da sala
+    socket.on('user left', (username) => {
+      addSystemMessage(`📍${username} saiu.`);
+    });
 
 
     socket.on('user typing', ({ username, isTyping }) => {
