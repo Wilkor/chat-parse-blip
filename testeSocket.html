@@ -24,7 +24,7 @@
       list-style-type: none;
       margin: 0;
       padding: 0;
-      height: 400px;
+      height: 800px;
       overflow-y: auto;
     }
 
@@ -97,7 +97,7 @@
       list-style-type: none;
       margin: 0;
       padding: 0;
-      height: 400px;
+      height: 600px;
       overflow-y: auto;
       padding-right: 10px;
       scrollbar-width: thin;
@@ -206,11 +206,23 @@
     }
 
     .system-message-text {
-  
+
       border-radius: 8px;
       padding: 8px 12px;
       max-width: 70%;
       word-wrap: break-word;
+    }
+
+    .user-initials {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      font-weight: bold;
+      font-size: 18px;
+      margin-right: 10px;
     }
   </style>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
@@ -297,8 +309,8 @@
 
       const message = {
         message: messageInput.value,
-        timestamp
-
+        timestamp,
+        bubbleColor: getRandomColor()
       }
 
       if (message.message.trim() !== '') {
@@ -327,11 +339,24 @@
     }
 
     socket.on('chat message', (msg) => {
+
       const messageContainer = document.createElement('div');
       messageContainer.classList.add('message-container');
 
       if (msg.user.toLowerCase() === nameFromURL.toLowerCase()) {
         messageContainer.classList.add('own');
+      }
+
+
+
+      const isOwnMessage = msg.user.toLowerCase() === nameFromURL.toLowerCase();
+      if (!isOwnMessage) {
+        const userInitials = document.createElement('div');
+        userInitials.textContent = getInitials(msg.user);
+        userInitials.classList.add('user-initials');
+        userInitials.style.backgroundColor = msg.bubbleColor;
+        userInitials.setAttribute('title', msg.user);
+        messageContainer.appendChild(userInitials);
       }
 
       const userNameElement = document.createElement('div');
@@ -358,6 +383,7 @@
       timestampElement.textContent = timestamp;
       timestampElement.classList.add('timestamp');
       messageContainer.appendChild(timestampElement);
+
 
       messagesElement.appendChild(messageContainer);
       messagesElement.scrollTop = messagesElement.scrollHeight;
@@ -433,6 +459,21 @@
         typingIndicator.textContent = '';
       }
     });
+
+    function getInitials(name) {
+      const words = name.split(' ');
+      if (words.length >= 2) {
+        return (words[0][0] + words[1][0]).toUpperCase();
+      } else if (words.length === 1) {
+        return words[0].slice(0, 2).toUpperCase();
+      }
+      return '';
+    }
+
+    function getRandomColor() {
+      const colors = ['#33A0FF'];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
 
   </script>
 </body>
