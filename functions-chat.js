@@ -120,16 +120,16 @@ function addMessageToChat(user, text, timestamp, bubbleColor) {
 }
 
 function addSystemMessage(message) {
-    const messageContainer = document.createElement('div');
-    messageContainer.classList.add('user-name', 'system-message'); // Adiciona a classe 'system-message'
 
-    const messageElement = document.createElement('div');
-    messageElement.textContent = message;
-    messageElement.classList.add('user-name', 'system-message-text'); // Adiciona a classe 'system-message-text'
-    messageContainer.appendChild(messageElement);
+    if (message.includes('📍')) {
 
-    messagesElement.appendChild(messageContainer);
-    messagesElement.scrollTop = messagesElement.scrollHeight;
+        const messageElement = document.createElement('div');
+        messageElement.textContent = message;
+        messageElement.classList.add('user-name', 'system-message-text');
+
+        messagesElement.appendChild(messageElement);
+        messagesElement.scrollTop = messagesElement.scrollHeight;
+    }
 }
 
 
