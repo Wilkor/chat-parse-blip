@@ -216,3 +216,7 @@ body {
     margin-right: 10px;
     color:#e5f6ff
   }
+  .mention {
+    background-color: yellow;
+    font-weight: bold;
+  }
