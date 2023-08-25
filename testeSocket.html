@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-  <title>Socket.IO Chat Example</title>
+  <title>Connect Team</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
   <link rel="stylesheet" type="text/css" href="estilo-chat.css">
+  <link rel="stylesheet" type="text/css" href="toast.css">
+  <script src="toastLib.js"></script>
+
 </head>
+
 <body>
   <div class="chat-container">
     <div class="input-container">
@@ -12,6 +17,7 @@
       <input class="input-field" type="text" id="name" placeholder="Nome de Usuário" />
       <button class="input-button" id="join-button">Entrar na Sala</button>
     </div>
+
     <div id="chat" style="display:none;">
       <div style="display:none;">
         <h6>Sala: <span id="current-room"></span></h6>
@@ -20,13 +26,19 @@
       <div id="typing-indicator" class="user-name"></div>
       <form class="input-container" id="chat-form">
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
+        <!-- <input type="file" id="file-input" /> Campo de entrada de arquivo -->
         <button class="btn input-button" id="submit-button" type="submit">
           Enviar
         </button>
+
       </form>
+
     </div>
   </div>
 </body>
+
 <script src="socket-chat.js"></script>
 <script src="functions-chat.js"></script>
+
+
 </html>
