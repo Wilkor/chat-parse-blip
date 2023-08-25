@@ -90,7 +90,14 @@ function findMentionedUsers(message) {
     const words = message.split(' ');
     for (const word of words) {
         if (word.startsWith('@')) {
-            mentionedUsers.push(word.substring(1).toLowerCase().replace(/[^\w\s]/gi, ''));
+            const mentionedUser = word.substring(1).toLowerCase().replace(/[^\w\s]/gi, '');
+            mentionedUsers.push(mentionedUser);
+            
+            // Verificar se há espaço no nome mencionado
+            if (mentionedUser.includes(' ')) {
+                const firstName = mentionedUser.split(' ')[0];
+                mentionedUsers.push(firstName);
+            }
         }
     }
     return mentionedUsers;
