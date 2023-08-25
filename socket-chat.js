@@ -84,7 +84,7 @@ socket.on('chat message', (msg) => {
 function highlightMentions(message, user) {
     return message.replace(/@(\w+)/g, (match, username) => {
         const lowercaseUsername = username.toLowerCase();
-        if (roomUserNames.includes(lowercaseUsername)) {
+        if (roomUserNames.includes(lowercaseUsername) && user.toLowerCase() !== lowercaseUsername) {
             console.log(`Mencionado: ${lowercaseUsername}`);
             sendAlert(`Você foi mencionado por ${user}`, '#21cc79', 4000);
             return `<span class="mention">${match}</span>`;
