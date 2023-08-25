@@ -1,4 +1,5 @@
 const messagesElement = document.getElementById('messages');
+
 const messageInput = document.getElementById('message-input');
 
 const urlSearchParams = new URLSearchParams(window.location.search);
@@ -15,7 +16,7 @@ document.getElementById('room').value = roomFromURL;
 document.getElementById('name').value = nameFromURL;
 
 if (roomFromURL && nameFromURL) {
-    openChat(roomFromURL, nameFromURL);
+    openChat(roomFromURL, nameFromURL, getRandomColor());
 }
 
 
@@ -23,6 +24,7 @@ const typingIndicatorTimeout = 1000;
 
 let isTyping = false;
 let typingTimeout;
+
 
 messageInput.addEventListener('input', () => {
 
@@ -76,9 +78,9 @@ document.getElementById('join-button').addEventListener('click', () => {
     }
 });
 
-function openChat(room, name) {
+function openChat(room, name, color) {
 
-    joinRoomSocket(room, name);
+    joinRoomSocket(room, name, color);
 
     addSystemMessage(`${name} entrou na sala.`);
 
@@ -145,7 +147,7 @@ function getInitials(name) {
 }
 
 function getRandomColor() {
-    const colors = ['#33A0FF'];
+    const colors = ['#9a53ff', "#d50000", "#4dcb7b"];
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
