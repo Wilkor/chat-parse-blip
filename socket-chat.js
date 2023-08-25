@@ -21,6 +21,14 @@ socket.on('user typing', ({ username, isTyping }) => {
 
 socket.on('chat message', (msg) => {
 
+    const mentionedUsers = findMentionedUsers(msg.text);
+     console.log(mentionedUsers)
+
+    // Verifica se o nome do usuário atual está na lista de mencionados
+    if (mentionedUsers.includes(nameFromURL.toLowerCase())) {
+        sendAlert(`Você foi mencionado por ${msg.user}`, '#21cc79', 4000);
+    }
+
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message-container');
 
@@ -31,7 +39,6 @@ socket.on('chat message', (msg) => {
     const isOwnMessage = msg.user.toLowerCase() === nameFromURL.toLowerCase();
 
     if (!isOwnMessage) {
-
         const userInitials = document.createElement('div');
         userInitials.textContent = getInitials(msg.user);
         userInitials.classList.add('user-initials');
@@ -40,18 +47,21 @@ socket.on('chat message', (msg) => {
         messageContainer.appendChild(userInitials);
     }
 
-    const userNameElement = document.createElement('div');
-    userNameElement.textContent = msg.user === nameFromURL.toLowerCase() ? '' : msg.user;
-    userNameElement.classList.add('user-name');
-    messageContainer.appendChild(userNameElement);
-
     const messageElement = document.createElement('div');
-    messageElement.textContent = msg.text;
+
+    // Aplica o destaque de menções
+    const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text);
+    messageElement.innerHTML = `${messageTextWithMentions}`;
+
     messageElement.classList.add('message');
     messageContainer.appendChild(messageElement);
 
-    const timestampElement = document.createElement('div');
+    const userNameElement = document.createElement('div');
+    userNameElement.textContent = isOwnMessage ? '' : msg.user;
+    userNameElement.classList.add('user-name');
+    messageContainer.appendChild(userNameElement);
 
+    const timestampElement = document.createElement('div');
     const timestampOptions = {
         hour: 'numeric',
         minute: 'numeric',
@@ -67,10 +77,25 @@ socket.on('chat message', (msg) => {
     timestampElement.classList.add('timestamp');
     messageContainer.appendChild(timestampElement);
 
-
     messagesElement.appendChild(messageContainer);
     messagesElement.scrollTop = messagesElement.scrollHeight;
 });
+
+function highlightMentions(message) {
+    return message.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
+}
+
+function findMentionedUsers(message) {
+    const mentionedUsers = [];
+    const words = message.split(' ');
+    for (const word of words) {
+        if (word.startsWith('@')) {
+            mentionedUsers.push(word.substring(1).toLowerCase().replace(/[^\w\s]/gi, ''));
+        }
+    }
+    return mentionedUsers;
+}
+
 
 socket.on('cached messages', (cachedMessages) => {
 
@@ -91,4 +116,8 @@ const joinRoomSocket = (room, name, color) => {
 const userTypingSocket = (nameFromURL, bool) => {
 
     socket.emit('user typing', nameFromURL, bool);
+}
+
+function highlightMentions(message) {
+    return message.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
 }
