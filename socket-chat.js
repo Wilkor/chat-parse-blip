@@ -82,7 +82,9 @@ socket.on('chat message', (msg) => {
 });
 
 function highlightMentions(message, user) {
-    return message.replace(/@(\w+)/g, (match, username) => {
+    const regexPattern = /@([\w\sÀ-ÖØ-öø-ÿ]+)/g;
+
+    return message.replace(regexPattern, (match, username) => {
         const lowercaseUsername = username.toLowerCase();
         if (roomUserNames.includes(lowercaseUsername) && user.toLowerCase() !== lowercaseUsername) {
             console.log(`Mencionado: ${lowercaseUsername}`);
@@ -93,6 +95,7 @@ function highlightMentions(message, user) {
         }
     });
 }
+
 
 socket.on('cached messages', (cachedMessages) => {
 
