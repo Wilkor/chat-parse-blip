@@ -83,9 +83,9 @@ const sendMessageSocket = (message) => {
     socket.emit('chat message', message);
 }
 
-const joinRoomSocket = (room, name) => {
+const joinRoomSocket = (room, name, color) => {
 
-    socket.emit('join room', { room, name });
+    socket.emit('join room', { room, name, color });
 }
 
 const userTypingSocket = (nameFromURL, bool) => {
