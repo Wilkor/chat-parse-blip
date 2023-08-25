@@ -1,5 +1,6 @@
 const socket = io('https://pontoparse.herokuapp.com/');
 //const socket = io('http://localhost:3333');
+let roomUserNames = [];
 
 socket.on('user joined', (username) => {
     addSystemMessage(`📍${username} entrou.`);
@@ -7,6 +8,11 @@ socket.on('user joined', (username) => {
 
 socket.on('user left', (username) => {
     addSystemMessage(`📍${username} saiu.`);
+});
+
+socket.on('roomData', (data) => {
+    roomUserNames = data.users.map(user => user.name.toLowerCase());
+    console.log(roomUserNames)
 });
 
 socket.on('user typing', ({ username, isTyping }) => {
@@ -21,13 +27,7 @@ socket.on('user typing', ({ username, isTyping }) => {
 
 socket.on('chat message', (msg) => {
 
-    const mentionedUsers = findMentionedUsers(msg.text);
-     console.log(mentionedUsers)
 
-    // Verifica se o nome do usuário atual está na lista de mencionados
-    if (mentionedUsers.includes(nameFromURL.toLowerCase())) {
-        sendAlert(`Você foi mencionado por ${msg.user}`, '#21cc79', 4000);
-    }
 
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message-container');
@@ -82,27 +82,17 @@ socket.on('chat message', (msg) => {
 });
 
 function highlightMentions(message) {
-    return message.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
-}
-
-function findMentionedUsers(message) {
-    const mentionedUsers = [];
-    const words = message.split(' ');
-    for (const word of words) {
-        if (word.startsWith('@')) {
-            const mentionedUser = word.substring(1).toLowerCase().replace(/[^\w\s]/gi, '');
-            mentionedUsers.push(mentionedUser);
-            
-            // Verificar se há espaço no nome mencionado
-            if (mentionedUser.includes(' ')) {
-                const firstName = mentionedUser.split(' ')[0];
-                mentionedUsers.push(firstName);
-            }
+    return message.replace(/@(\w+)/g, (match, username) => {
+        const lowercaseUsername = username.toLowerCase();
+        if (roomUserNames.includes(lowercaseUsername)) {
+            console.log(`Mencionado: ${lowercaseUsername}`);
+            sendAlert(`Você foi mencionado por ${lowercaseUsername}`, '#21cc79', 4000);
+            return `<span class="mention">${match}</span>`;
+        } else {
+            return match;
         }
-    }
-    return mentionedUsers;
+    });
 }
-
 
 socket.on('cached messages', (cachedMessages) => {
 
@@ -125,6 +115,4 @@ const userTypingSocket = (nameFromURL, bool) => {
     socket.emit('user typing', nameFromURL, bool);
 }
 
-function highlightMentions(message) {
-    return message.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
-}
+
