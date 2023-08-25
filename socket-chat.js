@@ -50,7 +50,7 @@ socket.on('chat message', (msg) => {
     const messageElement = document.createElement('div');
 
     // Aplica o destaque de menções
-    const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text);
+    const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text, msg.user);
     messageElement.innerHTML = `${messageTextWithMentions}`;
 
     messageElement.classList.add('message');
@@ -81,12 +81,12 @@ socket.on('chat message', (msg) => {
     messagesElement.scrollTop = messagesElement.scrollHeight;
 });
 
-function highlightMentions(message) {
+function highlightMentions(message, user) {
     return message.replace(/@(\w+)/g, (match, username) => {
         const lowercaseUsername = username.toLowerCase();
         if (roomUserNames.includes(lowercaseUsername)) {
             console.log(`Mencionado: ${lowercaseUsername}`);
-            sendAlert(`Você foi mencionado por ${lowercaseUsername}`, '#21cc79', 4000);
+            sendAlert(`Você foi mencionado por ${user}`, '#21cc79', 4000);
             return `<span class="mention">${match}</span>`;
         } else {
             return match;
