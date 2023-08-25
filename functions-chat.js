@@ -151,3 +151,19 @@ function getRandomColor() {
     return colors[Math.floor(Math.random() * colors.length)];
 }
 
+function sendAlert(message, color, delay) {
+
+    Toastify({
+      text: message,
+      duration: delay,
+      newWindow: true,
+      close: true,
+      gravity: "top",
+      position: "center",
+      stopOnFocus: true,
+      style: {
+        background: color,
+      }
+    }).showToast();
+  
+  }
