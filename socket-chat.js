@@ -96,7 +96,7 @@ function highlightMentions(message, user, roomUserNames, nameFromURL) {
         if (roomUserNames.includes(lowercaseUsername)) {
             console.log(`Mencionado: ${lowercaseUsername}`);
 
-            if (lowercaseUsername === nameFromURL.toLowerCase()) {
+            if (lowercaseUsername === nameFromURL.toLowerCase().split('@')[0]) {
            
                 const message = 'Olá, elemento pai!';
                 window.parent.postMessage(message, '*');
