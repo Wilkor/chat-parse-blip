@@ -88,7 +88,7 @@ socket.on('chat message', (msg) => {
 });
 
 function highlightMentions(message, user, roomUserNames, nameFromURL) {
-    const regexPattern = /@([\w\sÀ-ÖØ-öø-ÿ]+)/g;
+    const regexPattern = /#([\w\sÀ-ÖØ-öø-ÿ]+)/g;
 
     let highlightedMessage = message.replace(regexPattern, (match, username) => {
         const lowercaseUsername = username.toLowerCase();
