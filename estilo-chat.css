@@ -220,3 +220,70 @@ body {
     background-color: yellow;
     font-weight: bold;
   }
+  .user-list-popup {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+  }
+  
+  .user-list-popup h2 {
+    margin-top: 0;
+  }
+  
+  .user-list-popup ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .user-list-popup li {
+    margin-bottom: 5px;
+  }
+    /* Estilos para o popup */
+    .user-list-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+  
+    .user-list-popup h2 {
+      margin-top: 0;
+    }
+  
+    .user-list-popup ul {
+      list-style: none;
+      padding: 0;
+      overflow: hidden;
+    }
+  
+    .user-list-popup li {
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+  
+    .user-list-scroll {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+  
+    #search-user {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
