@@ -11,7 +11,7 @@ socket.on('user left', (username) => {
 });
 
 socket.on('roomData', (data) => {
-    roomUserNames = data.users.map(user => user.name.toLowerCase());
+    roomUserNames = data.users.map(user => user.name.toLowerCase().split('@')[0]);
     console.log(roomUserNames)
 });
 
@@ -88,7 +88,7 @@ socket.on('chat message', (msg) => {
 });
 
 function highlightMentions(message, user, roomUserNames, nameFromURL) {
-    const regexPattern = /#([\w\sÀ-ÖØ-öø-ÿ]+)/g;
+    const regexPattern = /@([\w\sÀ-ÖØ-öø-ÿ]+)/g;
 
     let highlightedMessage = message.replace(regexPattern, (match, username) => {
         const lowercaseUsername = username.toLowerCase();
