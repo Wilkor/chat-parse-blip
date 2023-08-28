@@ -1,7 +1,7 @@
 const socket = io('https://pontoparse.herokuapp.com/');
 //const socket = io('http://localhost:3333');
 let roomUserNames = [];
-
+let roomListNames = [];
 socket.on('user joined', (username) => {
     addSystemMessage(`📍${username} entrou.`);
 });
@@ -14,6 +14,12 @@ socket.on('roomData', (data) => {
     roomUserNames = data.users.map(user => user.name.toLowerCase());
     console.log(roomUserNames)
 });
+
+socket.on('roomData', (data) => {
+    roomListNames = data.users;
+    console.log(roomListNames)
+});
+
 
 socket.on('user typing', ({ username, isTyping }) => {
     const typingIndicator = document.getElementById('typing-indicator');
@@ -50,7 +56,7 @@ socket.on('chat message', (msg) => {
     const messageElement = document.createElement('div');
 
     // Aplica o destaque de menções
-    const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text, msg.user);
+    const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text, msg.user.toLowerCase(), roomUserNames,nameFromURL.toLowerCase() );
     messageElement.innerHTML = `${messageTextWithMentions}`;
 
     messageElement.classList.add('message');
@@ -81,20 +87,43 @@ socket.on('chat message', (msg) => {
     messagesElement.scrollTop = messagesElement.scrollHeight;
 });
 
-function highlightMentions(message, user) {
+function highlightMentions(message, user, roomUserNames, nameFromURL) {
     const regexPattern = /@([\w\sÀ-ÖØ-öø-ÿ]+)/g;
 
-    return message.replace(regexPattern, (match, username) => {
+    let highlightedMessage = message.replace(regexPattern, (match, username) => {
         const lowercaseUsername = username.toLowerCase();
-        if (roomUserNames.includes(lowercaseUsername) && user.toLowerCase() !== lowercaseUsername) {
+
+        if (roomUserNames.includes(lowercaseUsername)) {
             console.log(`Mencionado: ${lowercaseUsername}`);
-            sendAlert(`Você foi mencionado por ${user}`, '#21cc79', 4000);
+
+            if (lowercaseUsername === nameFromURL.toLowerCase()) {
+                sendAlert(`Você foi mencionado`, '#21cc79', 4000);
+
+                // Solicita permissão para mostrar notificações
+                Notification.requestPermission().then(permission => {
+                    if (permission === 'granted') {
+                        // Permissão concedida, cria uma notificação
+                        const notification = new Notification('Você foi mencionado', {
+                            body: 'Clique para ver a mensagem'
+                            // Adicione um ícone se desejar: icon: 'caminho/para/icone.png'
+                        });
+                        notification.onclick = () => {
+                            // Lógica a ser executada quando a notificação for clicada
+                            console.log('entregue');
+                        };
+                    }
+                });
+            }
+
             return `<span class="mention">${match}</span>`;
         } else {
             return match;
         }
     });
+
+    return highlightedMessage;
 }
+
 
 
 socket.on('cached messages', (cachedMessages) => {
