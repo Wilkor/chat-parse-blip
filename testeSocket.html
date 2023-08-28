@@ -7,7 +7,20 @@
   <link rel="stylesheet" type="text/css" href="estilo-chat.css">
   <link rel="stylesheet" type="text/css" href="toast.css">
   <script src="toastLib.js"></script>
-
+  <style>
+    /* Estilos para o popup */
+    .user-list-popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+    }
+  </style>
 </head>
 
 <body>
@@ -26,19 +39,29 @@
       <div id="typing-indicator" class="user-name"></div>
       <form class="input-container" id="chat-form">
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
+        
         <!-- <input type="file" id="file-input" /> Campo de entrada de arquivo -->
         <button class="btn input-button" id="submit-button" type="submit">
           Enviar
         </button>
-
-      </form>
-
+      </form><br>
+      <button class="input-button" id="user-list-button">Lista de Usuários</button>
     </div>
   </div>
+
+  <div class="user-list-popup" id="user-list-popup">
+    <h4>Usuários Conectados:</h4>
+    <input type="text" id="search-user" placeholder="Buscar usuário">
+    <hr>
+    <ul id="user-list" class="user-list-scroll">
+
+    </ul>
+    <button class="input-button" id="close-popup-button">Fechar</button>
+  </div>
+
+  <script src="socket-chat.js"></script>
+  <script src="functions-chat.js"></script>
+
 </body>
-
-<script src="socket-chat.js"></script>
-<script src="functions-chat.js"></script>
-
 
 </html>
