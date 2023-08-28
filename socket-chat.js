@@ -56,7 +56,7 @@ socket.on('chat message', (msg) => {
     const messageElement = document.createElement('div');
 
     // Aplica o destaque de menções
-    const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text, msg.user.toLowerCase(), roomUserNames,nameFromURL.toLowerCase() );
+    const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text, msg.user.toLowerCase(), roomUserNames, nameFromURL.toLowerCase());
     messageElement.innerHTML = `${messageTextWithMentions}`;
 
     messageElement.classList.add('message');
@@ -99,20 +99,9 @@ function highlightMentions(message, user, roomUserNames, nameFromURL) {
             if (lowercaseUsername === nameFromURL.toLowerCase()) {
                 sendAlert(`Você foi mencionado`, '#21cc79', 4000);
 
-                // Solicita permissão para mostrar notificações
-                Notification.requestPermission().then(permission => {
-                    if (permission === 'granted') {
-                        // Permissão concedida, cria uma notificação
-                        const notification = new Notification('Você foi mencionado', {
-                            body: 'Clique para ver a mensagem'
-                            // Adicione um ícone se desejar: icon: 'caminho/para/icone.png'
-                        });
-                        notification.onclick = () => {
-                            // Lógica a ser executada quando a notificação for clicada
-                            console.log('entregue');
-                        };
-                    }
-                });
+                const evento = new CustomEvent('alert-blip', { detail: 'ok' });
+                window.parent.dispatchEvent(evento);
+
             }
 
             return `<span class="mention">${match}</span>`;
