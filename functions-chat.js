@@ -221,7 +221,7 @@ function sendAlert(message, color, delay) {
     const target = event.target;
     if (target.classList.contains('user-name')) {
       const userName = target.textContent;
-      messageInputSearch.value = `${messageInputSearch.value.trim()} @${userName}, `;
+      messageInputSearch.value = `${messageInputSearch.value.trim()} #${userName}, `;
       userListPopup.style.display = 'none';
     }
   });
