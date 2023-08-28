@@ -178,6 +178,7 @@ function sendAlert(message, color, delay) {
   // Função para abrir o popup da lista de usuários
   const openUserListPopup = () => {
     // Preencha a lista de usuários com os nomes dos usuários da sala
+    console.log(roomListNames)
     userList.innerHTML = roomListNames.map(user => {
       if (user.name !== nameFromURL.toLowerCase()) {
         console.log(user.color)
@@ -221,7 +222,7 @@ function sendAlert(message, color, delay) {
     const target = event.target;
     if (target.classList.contains('user-name')) {
       const userName = target.textContent;
-      messageInputSearch.value = `${messageInputSearch.value.trim()} #${userName}, `;
+      messageInputSearch.value = `${messageInputSearch.value.trim()} @${userName}, `;
       userListPopup.style.display = 'none';
     }
   });
