@@ -167,3 +167,62 @@ function sendAlert(message, color, delay) {
     }).showToast();
   
   }
+
+  const userListButton = document.getElementById('user-list-button');
+  const userListPopup = document.getElementById('user-list-popup');
+  const closePopupButton = document.getElementById('close-popup-button');
+  const userList = document.getElementById('user-list');
+  const searchUserInput = document.getElementById('search-user'); // Campo de busca
+  const messageInputSearch = document.getElementById('message-input'); // Campo de mensagem
+  
+  // Função para abrir o popup da lista de usuários
+  const openUserListPopup = () => {
+    // Preencha a lista de usuários com os nomes dos usuários da sala
+    userList.innerHTML = roomListNames.map(user => {
+      if (user.name !== nameFromURL.toLowerCase()) {
+        console.log(user.color)
+        return `
+          <li class="user-item">
+            <span class="user-initials" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
+            <span class="user-name">${user.name}</span>
+          </li>`;
+      }
+    }).join('');
+    userListPopup.style.display = 'block';
+  };
+  
+  userListButton.addEventListener('click', openUserListPopup);
+  
+  closePopupButton.addEventListener('click', () => {
+    userListPopup.style.display = 'none';
+  });
+  
+  document.getElementById('chat-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+  });
+  
+
+  
+  // Adiciona evento de entrada de texto para filtrar a lista de usuários
+  searchUserInput.addEventListener('input', () => {
+    const searchTerm = searchUserInput.value.toLowerCase();
+    const filteredUsers = roomListNames.filter(user => user.name.toLowerCase().includes(searchTerm) );
+    userList.innerHTML = filteredUsers.map(user => {
+      return `
+        <li class="user-item">
+        <span class="user-initials" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
+          <span class="user-name">${user.name}</span>
+        </li>`;
+    }).join('');
+  });
+  
+  // Delegação de eventos para tratar cliques nos nomes de usuários
+  userList.addEventListener('click', (event) => {
+    const target = event.target;
+    if (target.classList.contains('user-name')) {
+      const userName = target.textContent;
+      messageInputSearch.value = `${messageInputSearch.value.trim()} @${userName}, `;
+      userListPopup.style.display = 'none';
+    }
+  });
+  
