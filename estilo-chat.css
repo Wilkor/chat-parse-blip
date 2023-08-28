@@ -16,7 +16,7 @@ body {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    height: 500px;
+    height: 400px;
     overflow-y: auto;
   }
 
@@ -88,7 +88,7 @@ body {
     list-style-type: none;
     margin: 0;
     padding: 0;
-    height: 500px;
+    height: 400px;
     overflow-y: auto;
     padding-right: 10px;
     scrollbar-width: thin;
