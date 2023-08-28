@@ -97,9 +97,13 @@ function highlightMentions(message, user, roomUserNames, nameFromURL) {
             console.log(`Mencionado: ${lowercaseUsername}`);
 
             if (lowercaseUsername === nameFromURL.toLowerCase()) {
-
                 sendAlert(`Você foi mencionado`, '#21cc79', 4000);
-                socket.emit('alert-blip', true);
+
+                const message = 'Olá, elemento pai!';
+
+                // Envia a mensagem para o elemento pai
+                window.parent.postMessage(message, '*');
+
             }
 
             return `<span class="mention">${match}</span>`;
