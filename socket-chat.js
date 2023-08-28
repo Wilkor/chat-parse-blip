@@ -99,8 +99,10 @@ function highlightMentions(message, user, roomUserNames, nameFromURL) {
             if (lowercaseUsername === nameFromURL.toLowerCase()) {
                 sendAlert(`Você foi mencionado`, '#21cc79', 4000);
 
-                const evento = new CustomEvent('alert-blip', { detail: 'ok' });
-                window.parent.dispatchEvent(evento);
+                const message = 'Olá, elemento pai!';
+
+                // Envia a mensagem para o elemento pai
+                window.parent.postMessage(message, '*');
 
             }
 
