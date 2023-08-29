@@ -131,7 +131,7 @@ function addSystemMessage(message) {
 
         const messageElement = document.createElement('div');
         messageElement.textContent = message;
-        //messageElement.classList.add('user-name', 'system-message-text');
+        messageElement.classList.add('user-name-center');
 
         messagesElement.appendChild(messageElement);
         messagesElement.scrollTop = messagesElement.scrollHeight;
