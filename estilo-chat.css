@@ -143,7 +143,6 @@ body {
 
   .own .timestamp {
     text-align: right;
-    /* Alinhar a data e hora à direita */
     font-size: 10px;
     color: #888;
     margin-top: 4px;
@@ -154,7 +153,7 @@ body {
     flex-direction: column;
     align-items: flex-end;
     margin-bottom: 5px;
-    /* Espaçamento entre as mensagens */
+
   }
 
   .other .message-container {
@@ -162,37 +161,71 @@ body {
     flex-direction: column;
     align-items: flex-start;
     margin-bottom: 5px;
-    /* Espaçamento entre as mensagens */
+    
   }
+
+  
 
   .message {
     border-radius: 15px;
     padding: 12px 18px;
-    max-width: 70%;
+    /* max-width: 70%; */ /* Remova ou comente essa linha */
+    width: fit-content; /* Ajusta a largura ao tamanho do conteúdo */
     word-wrap: break-word;
     margin-top: 2px;
-    /* Espaçamento entre a mensagem e a hora */
-  }
+    border: 1px solid var(--color-content-ghost,#8c8c8c);
+}
+
 
   .own .message {
-    background-color: #1976d2;
+    background-color: #454545;
     color: white;
     text-align: right;
     /* Alinhar a mensagem do próprio usuário à direita */
   }
+  .own .message {
+    position: relative;
+    margin-bottom: 5px;
+    width: auto;
+    height: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    white-space: pre-line;
+    border: 1px solid var(--color-content-ghost,#8c8c8c);
+}
+
 
   .other .message {
-    background-color: #f6f6f6;
-    color: #333;
-    text-align: left;
-    /* Alinhar a mensagem do outro usuário à esquerda */
-  }
+    position: relative;
+    margin-bottom: 5px;
+    width: fit-content; /* Ajusta a largura ao tamanho do conteúdo */
+    height: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    white-space: pre-line;
+    border: 1px solid var(--color-content-ghost, #8c8c8c);
+}
 
-  .timestamp {
-    font-size: 10px;
-    color: #888;
-  }
+.timestamp {
+  font-size: 10px;
+  color: #888;
+}
 
+.other-timestamp {
+  font-size: 10px;
+  color: #888;
+  position: relative;
+  top: 19px;
+}
+
+.own-timestamp {
+  font-size: 10px;
+  color: #888;
+  position: relative;
+  top: 1px;
+}
   .system-message {
     text-align: left;
     margin-bottom: 10px;
@@ -210,14 +243,17 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    top: 67px;
+    left: 1px;
     width: 25px;
     height: 25px;
     border-radius: 50%;
-  
     font-size: 10px;
     margin-right: 10px;
-    color:#e5f6ff
-  }
+    color: #e5f6ff;
+    z-index: 99999999;
+}
   .mention {
     background-color: yellow;
     font-weight: bold;
