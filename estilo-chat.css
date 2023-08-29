@@ -2,6 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
+    background-color: #ada7a7;
 
   }
 
@@ -10,6 +11,7 @@ body {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #e0e0e0;
   }
 
   .messages {
@@ -31,7 +33,7 @@ body {
   }
 
   .message {
-    background-color: #e5f6ff;
+    background-color: #f6f6f6;
     color: #333;
     border-radius: 15px;
     padding: 12px 18px;
@@ -180,7 +182,7 @@ body {
   }
 
   .other .message {
-    background-color: #e5f6ff;
+    background-color: #f6f6f6;
     color: #333;
     text-align: left;
     /* Alinhar a mensagem do outro usuário à esquerda */
