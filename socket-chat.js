@@ -33,8 +33,6 @@ socket.on('user typing', ({ username, isTyping }) => {
 
 socket.on('chat message', (msg) => {
 
-
-
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message-container');
 
@@ -62,10 +60,10 @@ socket.on('chat message', (msg) => {
     messageElement.classList.add('message');
     messageContainer.appendChild(messageElement);
 
-    const userNameElement = document.createElement('div');
-    userNameElement.textContent = isOwnMessage ? '' : msg.user;
-    userNameElement.classList.add('user-name');
-    messageContainer.appendChild(userNameElement);
+    // const userNameElement = document.createElement('div');
+    // userNameElement.textContent = isOwnMessage ? '' : msg.user;
+    // userNameElement.classList.add('user-name');
+    // messageContainer.appendChild(userNameElement);
 
     const timestampElement = document.createElement('div');
     const timestampOptions = {
@@ -83,6 +81,10 @@ socket.on('chat message', (msg) => {
     timestampElement.classList.add('timestamp');
     messageContainer.appendChild(timestampElement);
 
+    const timestampClass = isOwnMessage ? 'own-timestamp' : 'other-timestamp';
+  timestampElement.classList.add(timestampClass); // Adiciona a classe de carimbo de data/hora apropriada
+  messageContainer.appendChild(timestampElement);
+
     messagesElement.appendChild(messageContainer);
     messagesElement.scrollTop = messagesElement.scrollHeight;
 });
@@ -97,12 +99,9 @@ function highlightMentions(message, user, roomUserNames, nameFromURL) {
             console.log(`Mencionado: ${lowercaseUsername}`);
 
             if (lowercaseUsername === nameFromURL.toLowerCase().split('@')[0]) {
-           
                 const message = 'Olá, elemento pai!';
                 window.parent.postMessage(message, '*');
-
             }
-
             return `<span class="mention">${match}</span>`;
         } else {
             return match;
