@@ -254,6 +254,19 @@ body {
     color: #e5f6ff;
     z-index: 99999999;
 }
+
+.user-initials-popup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 10px;
+  margin-right: 10px;
+  color: #e5f6ff;
+
+}
   .mention {
     background-color: yellow;
     font-weight: bold;
