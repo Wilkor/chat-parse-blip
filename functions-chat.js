@@ -92,34 +92,38 @@ function openChat(room, name, color) {
 
 
 function addMessageToChat(user, text, timestamp, bubbleColor) {
-    const messageContainer = document.createElement('div');
-    messageContainer.classList.add('message-container');
+  const messageContainer = document.createElement('div');
+  messageContainer.classList.add('message-container');
 
-    const isOwnMessage = user.toLowerCase() === nameFromURL.toLowerCase();
-    messageContainer.classList.add(isOwnMessage ? 'own' : 'other'); // Adiciona a classe 'own' ou 'other'
+  const isOwnMessage = user.toLowerCase() === nameFromURL.toLowerCase();
+  messageContainer.classList.add(isOwnMessage ? 'own' : 'other'); // Adiciona a classe 'own' ou 'other'
 
-    if (!isOwnMessage) {
-        const userNameElement = document.createElement('div');
-        userNameElement.textContent = getInitials(user);
-        userNameElement.classList.add('user-initials');
-        userNameElement.setAttribute('title', user);
-        userNameElement.style.backgroundColor = bubbleColor;
-        messageContainer.appendChild(userNameElement);
-    }
+  if (!isOwnMessage) {
+      const userNameElement = document.createElement('div');
+      userNameElement.textContent = getInitials(user);
+      userNameElement.classList.add('user-initials');
+      userNameElement.setAttribute('title', user);
+      userNameElement.style.backgroundColor = bubbleColor;
+      messageContainer.appendChild(userNameElement);
+  }
 
-    const messageElement = document.createElement('div');
-    messageElement.textContent = text;
-    messageElement.classList.add('message');
-    messageContainer.appendChild(messageElement);
+  const messageElement = document.createElement('div');
+  messageElement.textContent = text;
+  messageElement.classList.add('message');
+  messageContainer.appendChild(messageElement);
 
-    const timestampElement = document.createElement('div');
-    timestampElement.textContent = timestamp;
-    timestampElement.classList.add('timestamp');
-    messageContainer.appendChild(timestampElement);
+  const timestampElement = document.createElement('div');
+  timestampElement.textContent = timestamp;
+  timestampElement.classList.add('timestamp');
 
-    messagesElement.appendChild(messageContainer);
-    messagesElement.scrollTop = messagesElement.scrollHeight;
+  const timestampClass = isOwnMessage ? 'own-timestamp' : 'other-timestamp';
+  timestampElement.classList.add(timestampClass); // Adiciona a classe de carimbo de data/hora apropriada
+  messageContainer.appendChild(timestampElement);
+
+  messagesElement.appendChild(messageContainer);
+  messagesElement.scrollTop = messagesElement.scrollHeight;
 }
+
 
 function addSystemMessage(message) {
 
@@ -127,7 +131,7 @@ function addSystemMessage(message) {
 
         const messageElement = document.createElement('div');
         messageElement.textContent = message;
-        messageElement.classList.add('user-name', 'system-message-text');
+        //messageElement.classList.add('user-name', 'system-message-text');
 
         messagesElement.appendChild(messageElement);
         messagesElement.scrollTop = messagesElement.scrollHeight;
