@@ -188,7 +188,7 @@ function sendAlert(message, color, delay) {
         console.log(user.color)
         return `
           <li class="user-item">
-            <span class="user-initials" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
+            <span class="user-initials-popup" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
             <span class="user-name">${user.name}</span>
           </li>`;
       }
@@ -215,7 +215,7 @@ function sendAlert(message, color, delay) {
     userList.innerHTML = filteredUsers.map(user => {
       return `
         <li class="user-item">
-        <span class="user-initials" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
+        <span class="user-initials-popup" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
           <span class="user-name">${user.name}</span>
         </li>`;
     }).join('');
