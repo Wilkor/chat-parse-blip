@@ -177,11 +177,13 @@ body {
   .message {
     border-radius: 15px;
     padding: 12px 18px;
+    margin-left: 14px;
     /* max-width: 70%; */ /* Remova ou comente essa linha */
     width: fit-content; /* Ajusta a largura ao tamanho do conteúdo */
     word-wrap: break-word;
     margin-top: 2px;
     border: 1px solid var(--color-content-ghost,#8c8c8c);
+    border-radius: 13px 13px 13px 2px;
 }
 
 
