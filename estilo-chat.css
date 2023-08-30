@@ -227,7 +227,7 @@ body {
   font-size: 10px;
   color: #888;
   position: relative;
-  top: 19px;
+  top: 3px;
 }
 
 .own-timestamp {
@@ -253,9 +253,6 @@ body {
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    position: relative;
-    top: 67px;
-    left: 0px;
     width: 25px;
     height: 25px;
     border-radius: 50%;
