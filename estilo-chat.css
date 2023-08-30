@@ -205,17 +205,19 @@ body {
 }
 
 
-  .other .message {
-    position: relative;
-    margin-bottom: 5px;
-    width: fit-content; /* Ajusta a largura ao tamanho do conteúdo */
-    height: 100%;
-    font-size: 16px;
-    font-weight: 400;
-    line-height: 20px;
-    white-space: pre-line;
-    border: 1px solid var(--color-content-ghost, #8c8c8c);
-    border-radius: 13px 13px 13px 2px;
+
+.other .message {
+  position: relative;
+  margin-bottom: 1px;
+  margin-left: 14px;
+  width: fit-content;
+  height: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: pre-line;
+  border: 1px solid var(--color-content-ghost, #8c8c8c);
+  border-radius: 13px 13px 13px 2px;
 }
 
 .timestamp {
