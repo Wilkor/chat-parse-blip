@@ -1,5 +1,7 @@
 const socket = io('https://pontoparse.herokuapp.com/');
 //const socket = io('http://localhost:3333');
+
+
 let roomUserNames = [];
 let roomListNames = [];
 socket.on('user joined', (username) => {
@@ -42,14 +44,6 @@ socket.on('chat message', (msg) => {
 
     const isOwnMessage = msg.user.toLowerCase() === nameFromURL.toLowerCase();
 
-    if (!isOwnMessage) {
-        const userInitials = document.createElement('div');
-        userInitials.textContent = getInitials(msg.user);
-        userInitials.classList.add('user-initials');
-        userInitials.style.backgroundColor = msg.bubbleColor;
-        userInitials.setAttribute('title', msg.user);
-        messageContainer.appendChild(userInitials);
-    }
 
     const messageElement = document.createElement('div');
 
@@ -59,6 +53,16 @@ socket.on('chat message', (msg) => {
 
     messageElement.classList.add('message');
     messageContainer.appendChild(messageElement);
+    
+    if (!isOwnMessage) {
+        const userInitials = document.createElement('div');
+        userInitials.textContent = getInitials(msg.user);
+        userInitials.classList.add('user-initials');
+        userInitials.style.backgroundColor = msg.bubbleColor;
+        userInitials.setAttribute('title', msg.user);
+        messageContainer.appendChild(userInitials);
+    }
+
 
     // const userNameElement = document.createElement('div');
     // userNameElement.textContent = isOwnMessage ? '' : msg.user;
