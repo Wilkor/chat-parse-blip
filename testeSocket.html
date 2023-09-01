@@ -57,12 +57,13 @@
       <div id="typing-indicator" class="user-name"></div>
       <form class="input-container" id="chat-form">
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
+        <button class="btn btn-secondary btn-sm" id="emoji-button" type="button" onclick="toggleWebpagePopup()">
+          😃
+        </button>
         <button class="btn btn-primary btn-sm" id="submit-button" type="submit">
           Enviar
         </button>
-        <button class="btn btn-secondary btn-sm" id="emoji-button" type="button" onclick="toggleWebpagePopup()">
-          <i class="far fa-smile"></i>
-        </button>
+      
       </form>
       <br>
       <button class="btn btn-primary btn-sm" id="user-list-button" onclick="toggleUserListPopup()">Lista de
