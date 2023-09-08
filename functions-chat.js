@@ -184,17 +184,20 @@ const messageInputSearch = document.getElementById('message-input'); // Campo de
 // Função para abrir o popup da lista de usuários
 const openUserListPopup = () => {
   // Preencha a lista de usuários com os nomes dos usuários da sala
-  console.log(roomListNames)
-  userList.innerHTML = roomListNames.map(user => {
+  console.log(roomListNames);
+  userList.innerHTML = roomListNames.map((user, index) => {
     if (user.name !== nameFromURL.toLowerCase()) {
-      console.log(user.color)
+
       return `
-          <li class="user-item">
-            <span class="user-initials-popup" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
-            <span class="user-name">${user.name}</span>
-          </li>`;
+        <li class="user-item">
+          <span class="user-initials-popup" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
+          <span class="user-name">${user.name}</span>
+         
+        </li>`;
     }
   }).join('');
+
+
   userListPopup.style.display = 'block';
 };
 
