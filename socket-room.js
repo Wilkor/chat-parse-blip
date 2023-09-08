@@ -97,7 +97,7 @@ socket.on('getRoomData', (data) => {
             return `
             <li class="user-item">
                 <span class="user-initials-popup"></span>
-                <span class="user-name" style="cursor:pointer" title="${user.name}">${user.name.split(' ')[0]}</span>
+                <span class="user-name" style="cursor:pointer" title="${user.name}">${user.name}</span>
                 <i class="fa-regular fa-comment-dots"></i>
             </li>`;
         }
@@ -114,7 +114,7 @@ socket.on('getRoomData', (data) => {
                 return `
               <li class="user-item">
                 <span class="user-initials-popup" ></span>
-                <span class="user-name" style="cursor:pointer" title="${user.name}">${user.name.split(' ')[0]}</span>
+                <span class="user-name" style="cursor:pointer" title="${user.name}">${user.name}</span>
                 <i class="fa-regular fa-comment-dots"></i>
               </li>`;
             }
