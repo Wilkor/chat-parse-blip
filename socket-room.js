@@ -1,5 +1,5 @@
-const socket = io('https://pontoparse.herokuapp.com/');
-//const socket = io('http://localhost:3333');
+//const socket = io('https://pontoparse.herokuapp.com/');
+const socket = io('http://localhost:3333');
 
 let roomListNamesSocket = [];
 
@@ -80,7 +80,7 @@ socket.on('getRoomData', (data) => {
         console.log(roomByName)
 
         const iframeElement = document.createElement('iframe');
-        iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?name=${nameFromURL}&room=${roomByName}`;
+        iframeElement.src = `http://127.0.0.1:5500/chat.html?name=${nameFromURL}&room=${roomByName}`;
         iframeElement.classList.add('your-iframe-class');
         iframeElement.style.width = '430px';
         iframeElement.style.height = '700px';
@@ -96,7 +96,7 @@ socket.on('getRoomData', (data) => {
         if (user.name !== nameFromURL.toLowerCase()) {
             return `
             <li class="user-item">
-                <span class="user-initials-popup" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
+                <span class="user-initials-popup"></span>
                 <span class="user-name" style="cursor:pointer">${user.name}</span>
                 <i class="fa-regular fa-comment-dots"></i>
             </li>`;
@@ -113,7 +113,7 @@ socket.on('getRoomData', (data) => {
             if (user.name !== nameFromURL.toLowerCase()) {
                 return `
               <li class="user-item">
-                <span class="user-initials-popup" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
+                <span class="user-initials-popup" ></span>
                 <span class="user-name" style="cursor:pointer">${user.name}</span>
                 <i class="fa-regular fa-comment-dots"></i>
               </li>`;
@@ -143,8 +143,3 @@ socket.on('getRoomData', (data) => {
 
 
 });
-
-
-
-
-
