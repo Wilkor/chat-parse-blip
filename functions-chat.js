@@ -1,237 +1,136 @@
-const messagesElement = document.getElementById('messages');
-
-const messageInput = document.getElementById('message-input');
-
-const urlSearchParams = new URLSearchParams(window.location.search);
-
-console.log(urlSearchParams);
+const socket = io('https://pontoparse.herokuapp.com/');
+//const socket = io('http://localhost:3333');
 
 
-const roomFromURL = urlSearchParams.get('room');
-const nameFromURL = urlSearchParams.get('name');
+let roomUserNames = [];
+let roomListNames = [];
+socket.on('user joined', (username) => {
+    addSystemMessage(`📍${username} entrou.`);
+});
 
-console.log(roomFromURL, nameFromURL)
+socket.on('user left', (username) => {
+    //addSystemMessage(`📍${username} saiu.`);
+});
 
-document.getElementById('room').value = roomFromURL;
-document.getElementById('name').value = nameFromURL;
+socket.on('roomData', (data) => {
+    roomUserNames = data.users.map(user => user.name.toLowerCase().split('@')[0]);
+    console.log(roomUserNames)
+});
 
-if (roomFromURL && nameFromURL) {
-  openChat(roomFromURL, nameFromURL, getRandomColor());
-}
-
-
-const typingIndicatorTimeout = 1000;
-
-let isTyping = false;
-let typingTimeout;
-
-
-messageInput.addEventListener('input', () => {
-
-  if (!isTyping) {
-    isTyping = true;
-    userTypingSocket(nameFromURL, true);
-  }
-
-  clearTimeout(typingTimeout);
-  typingTimeout = setTimeout(() => {
-    isTyping = false;
-    userTypingSocket(nameFromURL, false);
-  }, typingIndicatorTimeout);
+socket.on('roomData', (data) => {
+    roomListNames = data.users;
+    console.log(roomListNames)
 });
 
 
-document.getElementById('submit-button').addEventListener('click', (event) => {
-  event.preventDefault();
+socket.on('user typing', ({ username, isTyping }) => {
+    const typingIndicator = document.getElementById('typing-indicator');
 
-  const timestampOptions = {
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric',
-    timeZone: 'America/Sao_Paulo'
-  };
-  const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
-
-  const message = {
-    message: messageInput.value,
-    timestamp,
-    bubbleColor: getRandomColor()
-  }
-
-
-
-  if (message.message.trim() !== '') {
-    sendMessageSocket(message);
-    messageInput.value = '';
-  }
+    if (isTyping) {
+        typingIndicator.textContent = nameFromURL.toLowerCase() === username.toLowerCase() ? '' : `${username} está digitando...`;
+    } else {
+        typingIndicator.textContent = '';
+    }
 });
 
-document.getElementById('join-button').addEventListener('click', () => {
-  const room = document.getElementById('room').value;
-  const name = document.getElementById('name').value;
+socket.on('chat message', (msg) => {
 
-  if (room.trim() !== '' && name.trim() !== '') {
-    openChat(room, name);
-  }
-});
+    const messageContainer = document.createElement('div');
+    messageContainer.classList.add('message-container');
 
-function openChat(room, name, color) {
+    if (msg.user.toLowerCase() === nameFromURL.toLowerCase()) {
+        messageContainer.classList.add('own');
+    }
 
-  joinRoomSocket(room, name, color);
-
-  addSystemMessage(`${name} entrou na sala.`);
-
-  document.querySelector('.input-container').style.display = 'none';
-  document.getElementById('chat').style.display = 'block';
-  document.getElementById('current-room').textContent = room;
-}
+    const isOwnMessage = msg.user.toLowerCase() === nameFromURL.toLowerCase();
 
 
+    const messageElement = document.createElement('div');
 
-function addMessageToChat(user, text, timestamp, bubbleColor) {
-  const messageContainer = document.createElement('div');
-  messageContainer.classList.add('message-container');
+    // Aplica o destaque de menções
+    const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text, msg.user.toLowerCase(), roomUserNames, nameFromURL.toLowerCase());
+    messageElement.innerHTML = `${messageTextWithMentions}`;
 
-  const isOwnMessage = user.toLowerCase() === nameFromURL.toLowerCase();
-  messageContainer.classList.add(isOwnMessage ? 'own' : 'other'); // Adiciona a classe 'own' ou 'other'
-
-
-  const messageElement = document.createElement('div');
-  messageElement.textContent = text;
-  messageElement.classList.add('message');
-  messageContainer.appendChild(messageElement);
-
-  if (!isOwnMessage) {
-    const userNameElement = document.createElement('div');
-    userNameElement.textContent = getInitials(user);
-    userNameElement.classList.add('user-initials');
-    userNameElement.setAttribute('title', user);
-    userNameElement.style.backgroundColor = bubbleColor;
-    messageContainer.appendChild(userNameElement);
-  }
+    messageElement.classList.add('message');
+    messageContainer.appendChild(messageElement);
+    
+    if (!isOwnMessage) {
+        const userInitials = document.createElement('div');
+        userInitials.textContent = getInitials(msg.user);
+        userInitials.classList.add('user-initials');
+        userInitials.style.backgroundColor = msg.bubbleColor;
+        userInitials.setAttribute('title', msg.user);
+        messageContainer.appendChild(userInitials);
+    }
 
 
-  const timestampElement = document.createElement('div');
-  timestampElement.textContent = timestamp;
-  timestampElement.classList.add('timestamp');
+    const timestampElement = document.createElement('div');
+    const timestampOptions = {
+        hour: 'numeric',
+        minute: 'numeric',
+        second: 'numeric',
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric',
+        timeZone: 'America/Sao_Paulo'
+    };
 
-  const timestampClass = isOwnMessage ? 'own-timestamp' : 'other-timestamp';
+    const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
+    timestampElement.textContent = timestamp;
+    timestampElement.classList.add('timestamp');
+    messageContainer.appendChild(timestampElement);
+
+    const timestampClass = isOwnMessage ? 'own-timestamp' : 'other-timestamp';
   timestampElement.classList.add(timestampClass); // Adiciona a classe de carimbo de data/hora apropriada
   messageContainer.appendChild(timestampElement);
 
-  messagesElement.appendChild(messageContainer);
-  messagesElement.scrollTop = messagesElement.scrollHeight;
-}
-
-
-function addSystemMessage(message) {
-
-  if (message.includes('📍')) {
-
-    const messageElement = document.createElement('div');
-    messageElement.textContent = message;
-    messageElement.classList.add('user-name-center');
-
-    messagesElement.appendChild(messageElement);
+    messagesElement.appendChild(messageContainer);
     messagesElement.scrollTop = messagesElement.scrollHeight;
-  }
+});
+
+function highlightMentions(message, user, roomUserNames, nameFromURL) {
+    const regexPattern = /@([\w\sÀ-ÖØ-öø-ÿ]+)/g;
+
+    let highlightedMessage = message.replace(regexPattern, (match, username) => {
+        const lowercaseUsername = username.toLowerCase();
+
+        if (roomUserNames.includes(lowercaseUsername)) {
+            console.log(`Mencionado: ${lowercaseUsername}`);
+
+            if (lowercaseUsername === nameFromURL.toLowerCase().split('@')[0]) {
+                const message = 'Olá, elemento pai!';
+                window.parent.postMessage(message, '*');
+            }
+            return `<span class="mention">${match}</span>`;
+        } else {
+            return match;
+        }
+    });
+
+    return highlightedMessage;
 }
 
 
 
-function getInitials(name) {
-  const words = name.split(' ');
-  if (words.length >= 2) {
-    return (words[0][0] + words[1][0]).toUpperCase();
-  } else if (words.length === 1) {
-    return words[0].slice(0, 2).toUpperCase();
-  }
-  return '';
+socket.on('cached messages', (cachedMessages) => {
+
+    cachedMessages.forEach((msg) => {
+        addMessageToChat(msg.user, msg.text, msg.timestamp, msg.bubbleColor);
+    });
+});
+
+const sendMessageSocket = (message) => {
+    socket.emit('chat message', message);
 }
 
-function getRandomColor() {
-  const colors = ['#9a53ff', "#d50000", "#4dcb7b"];
-  return colors[Math.floor(Math.random() * colors.length)];
+const joinRoomSocket = (room, name, color) => {
+
+    socket.emit('join room', { room, name, color });
 }
 
-function sendAlert(message, color, delay) {
+const userTypingSocket = (nameFromURL, bool) => {
 
-  Toastify({
-    text: message,
-    duration: delay,
-    newWindow: true,
-    close: true,
-    gravity: "top",
-    position: "center",
-    stopOnFocus: true,
-    style: {
-      background: color,
-    }
-  }).showToast();
-
+    socket.emit('user typing', nameFromURL, bool);
 }
 
-const userListButton = document.getElementById('user-list-button');
-const userListPopup = document.getElementById('user-list-popup');
-const closePopupButton = document.getElementById('close-popup-button');
-const userList = document.getElementById('user-list');
-const searchUserInput = document.getElementById('search-user'); // Campo de busca
-const messageInputSearch = document.getElementById('message-input'); // Campo de mensagem
 
-// Função para abrir o popup da lista de usuários
-const openUserListPopup = () => {
-  // Preencha a lista de usuários com os nomes dos usuários da sala
-  console.log(roomListNames);
-  userList.innerHTML = roomListNames.map((user, index) => {
-    if (user.name !== nameFromURL.toLowerCase()) {
-
-      return `
-        <li class="user-item">
-          <span class="user-initials-popup" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
-          <span class="user-name">${user.name}</span>
-         
-        </li>`;
-    }
-  }).join('');
-
-
-  userListPopup.style.display = 'block';
-};
-
-userListButton.addEventListener('click', openUserListPopup);
-
-closePopupButton.addEventListener('click', () => {
-  userListPopup.style.display = 'none';
-});
-
-document.getElementById('chat-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-});
-
-
-
-// Adiciona evento de entrada de texto para filtrar a lista de usuários
-searchUserInput.addEventListener('input', () => {
-  const searchTerm = searchUserInput.value.toLowerCase();
-  const filteredUsers = roomListNames.filter(user => user.name.toLowerCase().includes(searchTerm));
-  userList.innerHTML = filteredUsers.map(user => {
-    return `
-        <li class="user-item">
-        <span class="user-initials-popup" style="background-color: ${user.color};width: 10px;height: 10px;"></span>
-          <span class="user-name">${user.name}</span>
-        </li>`;
-  }).join('');
-});
-
-// Delegação de eventos para tratar cliques nos nomes de usuários
-userList.addEventListener('click', (event) => {
-  const target = event.target;
-  if (target.classList.contains('user-name')) {
-    const userName = target.textContent;
-    messageInputSearch.value = `${messageInputSearch.value.trim()} @${userName}, `;
-    userListPopup.style.display = 'none';
-  }
-});
