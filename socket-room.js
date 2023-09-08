@@ -1,5 +1,5 @@
-//const socket = io('https://pontoparse.herokuapp.com/');
-const socket = io('http://localhost:3333');
+const socket = io('https://pontoparse.herokuapp.com/');
+//const socket = io('http://localhost:3333');
 
 let roomListNamesSocket = [];
 
