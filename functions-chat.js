@@ -69,8 +69,9 @@ document.getElementById('submit-button').addEventListener('click', (event) => {
 });
 
 document.getElementById('join-button').addEventListener('click', () => {
-  const room = document.getElementById('room').value;
-  const name = document.getElementById('name').value;
+  const room = roomFromURL
+  const name = nameFromURL
+
 
   if (room.trim() !== '' && name.trim() !== '') {
     openChat(room, name);
