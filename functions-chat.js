@@ -11,8 +11,8 @@ window.addEventListener('message', (event) => {
 
   roomFromURL = event.data.room
   nameFromURL = event.data.name
-  document.getElementById('room').value = event.data.room;
-  document.getElementById('name').value = event.data.name;
+  // document.getElementById('room').value = event.data.room;
+  // document.getElementById('name').value = event.data.name;
 
 
   openChat(event.data.room, event.data.name, getRandomColor());
