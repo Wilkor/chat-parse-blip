@@ -12,7 +12,7 @@ const nameFromURL = urlSearchParams.get('name').toLowerCase();
 
 const contractFromURL = urlSearchParams.get('contract').toLowerCase();
 
-socket.emit('join room', { room: contractFromURL, name: nameFromURL, color: '' });
+socket.emit('join room', { room: contractFromURL, name: nameFromURL, color: getRandomColor() });
 
 socket.emit('getRoomData', { status: true, room: contractFromURL });
 
@@ -43,16 +43,19 @@ const messageInputSearch = document.getElementById('message-input');
 let iframes = [];
 let roomByName;
 let roomListNames = [];
+
+const objEquipe = {
+
+    "id": "122333",
+    "name": "Equipe",
+    "room": "pontoparse"
+
+}
+
 socket.on('getRoomData', (data) => {
     roomListNames = data.users;
 
-    const objEquipe = {
 
-        "id": "122333",
-        "name": "Equipe",
-        "room": "pontoparse"
-
-    }
     roomListNames.push(objEquipe)
 
 
@@ -79,7 +82,7 @@ socket.on('getRoomData', (data) => {
         if (user === "Equipe") {
             roomByName = contractFromURL;
         } else {
-            roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`).id || [];
+            roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`).id || contractFromURL;
         }
     
         const iframeElement = document.createElement('iframe');
@@ -139,17 +142,17 @@ socket.on('getRoomData', (data) => {
          console.log(target.getAttribute)
 
         if (target) {
-            event.preventDefault(); // Evita a recarga da página
+            event.preventDefault(); 
             if (target.classList.contains('user-name')) {
                 const userName = target.textContent;
     
-                // Remova a classe .highlighted-user de todos os nomes de usuário
+                
                 const userNames = document.querySelectorAll('.user-name');
                 userNames.forEach(name => {
                     name.classList.remove('highlighted-user');
                 });
     
-                // Adicione a classe .highlighted-user ao nome do usuário clicado
+        
                 target.classList.add('highlighted-user');
                 document.getElementById('open-sidebar').click()
                 const index = Array.from(userList.children).indexOf(target.parentNode);
@@ -163,3 +166,9 @@ socket.on('getRoomData', (data) => {
     });
 
 });
+
+function getRandomColor() {
+    const colors = ['#9a53ff', "#d50000", "#4dcb7b"];
+    return colors[Math.floor(Math.random() * colors.length)];
+  }
+  
