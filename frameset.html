@@ -85,10 +85,9 @@
 <script src="socket-room.js?id=100"></script>
 <script>
   window.addEventListener('message', (event) => {
-
+    event.preventDefault();
      if(event.data === 'message-sidebar'){
         document.getElementById('open-sidebar').click()
-       return
      }
 
     const message = 'Olá, elemento pai!';
