@@ -96,9 +96,10 @@ socket.on('getRoomData', (data) => {
         if (user.name !== nameFromURL.toLowerCase()) {
             return `
             <li class="user-item">
+            <i class="fa-regular fa-comment-dots"></i>
                 <span class="user-initials-popup"></span>
                 <span class="user-name" style="cursor:pointer" title="${user.name}">${user.name}</span>
-                <i class="fa-regular fa-comment-dots"></i>
+                
             </li>`;
         }
     }).join('');
@@ -113,9 +114,10 @@ socket.on('getRoomData', (data) => {
             if (user.name !== nameFromURL.toLowerCase()) {
                 return `
               <li class="user-item">
+              <i class="fa-regular fa-comment-dots"></i>
                 <span class="user-initials-popup" ></span>
                 <span class="user-name" style="cursor:pointer" title="${user.name}">${user.name}</span>
-                <i class="fa-regular fa-comment-dots"></i>
+                
               </li>`;
             }
         }).join('');
