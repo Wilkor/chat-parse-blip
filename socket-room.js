@@ -139,8 +139,6 @@ socket.on('getRoomData', (data) => {
       
         const target = event.target;
 
-         console.log(target.getAttribute)
-
         if (target) {
             event.preventDefault(); 
             if (target.classList.contains('user-name')) {
