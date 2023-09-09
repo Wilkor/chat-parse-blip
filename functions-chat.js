@@ -4,21 +4,20 @@ const messageInput = document.getElementById('message-input');
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 
-console.log(urlSearchParams);
+let roomFromURL = ''
+let nameFromURL = ''
+
+window.addEventListener('message', (event) => {
+
+  roomFromURL = event.data.room
+  nameFromURL = event.data.name
+  document.getElementById('room').value = event.data.room;
+  document.getElementById('name').value = event.data.name;
 
 
-const roomFromURL = urlSearchParams.get('room');
-const nameFromURL = urlSearchParams.get('name');
+  openChat(event.data.room, event.data.name, getRandomColor());
 
-console.log(roomFromURL, nameFromURL)
-
-document.getElementById('room').value = roomFromURL;
-document.getElementById('name').value = nameFromURL;
-
-if (roomFromURL && nameFromURL) {
-  openChat(roomFromURL, nameFromURL, getRandomColor());
-}
-
+});
 
 const typingIndicatorTimeout = 1000;
 
