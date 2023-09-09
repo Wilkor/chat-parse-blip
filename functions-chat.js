@@ -68,15 +68,15 @@ document.getElementById('submit-button').addEventListener('click', (event) => {
   }
 });
 
-document.getElementById('join-button').addEventListener('click', () => {
-  const room = roomFromURL
-  const name = nameFromURL
+// document.getElementById('join-button').addEventListener('click', () => {
+//   const room = roomFromURL
+//   const name = nameFromURL
 
 
-  if (room.trim() !== '' && name.trim() !== '') {
-    openChat(room, name);
-  }
-});
+//   if (room.trim() !== '' && name.trim() !== '') {
+//     openChat(room, name);
+//   }
+// });
 
 function openChat(room, name, color) {
 
