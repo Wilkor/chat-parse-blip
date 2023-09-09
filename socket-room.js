@@ -82,7 +82,7 @@ socket.on('getRoomData', (data) => {
         if (user === "Equipe") {
             roomByName = contractFromURL;
         } else {
-            roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`).id || contractFromURL;
+            roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`)?.id || contractFromURL;
         }
     
         const iframeElement = document.createElement('iframe');
