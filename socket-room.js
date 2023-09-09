@@ -125,7 +125,9 @@ socket.on('getRoomData', (data) => {
 
 
     userList.addEventListener('click', (event) => {
+        event.preventDefault();
         const target = event.target;
+        
         if (target.classList.contains('user-name')) {
             const userName = target.textContent;
 
