@@ -58,9 +58,16 @@ socket.on('getRoomData', (data) => {
 
     const names = roomListNames.map(item => item.name);
     const combinations = generateCombinations(names);
-    openIframe(0, 'Equipe');
-    function openIframe(index, user) {
+    const idx = localStorage.getItem('last-room-index') || 0 
+    const team = localStorage.getItem('last-room-userName') || 'Equipe';
 
+    console.log("index e time",idx, team)
+    setTimeout(() => {
+        openIframe(idx, team);
+
+    },1000 )
+ 
+    function openIframe(index, user) {
         iframes.forEach((iframe, i) => {
             if (i === index) {
                 iframe.classList.add('show', 'active');
@@ -68,28 +75,29 @@ socket.on('getRoomData', (data) => {
                 iframe.classList.remove('show', 'active');
             }
         });
-
-
-
+    
         if (user === "Equipe") {
-            roomByName = contractFromURL
+            roomByName = contractFromURL;
         } else {
             roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`).id || [];
         }
-
-        console.log(roomByName)
-
+    
         const iframeElement = document.createElement('iframe');
-        iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?name=${nameFromURL}&room=${roomByName}`;
+        iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
         iframeElement.classList.add('your-iframe-class');
         iframeElement.style.width = '100%';
         iframeElement.style.height = '700px';
-
-
+    
         const iframeContainer = document.getElementById('iframe');
         iframeContainer.innerHTML = '';
         iframeContainer.appendChild(iframeElement);
+    
+       
+        iframeElement.addEventListener('load', () => {
+            iframeElement.contentWindow.postMessage({name: nameFromURL, room:roomByName});
+        });
     }
+    
 
 
     userList.innerHTML = roomListNames.map((user, index) => {
@@ -125,25 +133,33 @@ socket.on('getRoomData', (data) => {
 
 
     userList.addEventListener('click', (event) => {
-        event.preventDefault();
+      
         const target = event.target;
-        
-        if (target.classList.contains('user-name')) {
-            const userName = target.textContent;
 
-            // Remova a classe .highlighted-user de todos os nomes de usuário
-            const userNames = document.querySelectorAll('.user-name');
-            userNames.forEach(name => {
-                name.classList.remove('highlighted-user');
-            });
+         console.log(target.getAttribute)
 
-            // Adicione a classe .highlighted-user ao nome do usuário clicado
-            target.classList.add('highlighted-user');
-            document.getElementById('open-sidebar').click()
-            const index = Array.from(userList.children).indexOf(target.parentNode);
-            openIframe(index, userName);
+        if (target) {
+            event.preventDefault(); // Evita a recarga da página
+            if (target.classList.contains('user-name')) {
+                const userName = target.textContent;
+    
+                // Remova a classe .highlighted-user de todos os nomes de usuário
+                const userNames = document.querySelectorAll('.user-name');
+                userNames.forEach(name => {
+                    name.classList.remove('highlighted-user');
+                });
+    
+                // Adicione a classe .highlighted-user ao nome do usuário clicado
+                target.classList.add('highlighted-user');
+                document.getElementById('open-sidebar').click()
+                const index = Array.from(userList.children).indexOf(target.parentNode);
+                localStorage.setItem('last-room-index', index)
+                localStorage.setItem('last-room-userName', userName)
+                openIframe(index, userName);
+            }
         }
-    });
+        
 
+    });
 
 });
