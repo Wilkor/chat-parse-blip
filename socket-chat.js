@@ -9,7 +9,7 @@ socket.on('user joined', (username) => {
 });
 
 socket.on('user left', (username) => {
-    addSystemMessage(`📍${username} saiu.`);
+    addSystemMessage(`📍${username} ficou ausente.`);
 });
 
 socket.on('roomData', (data) => {
@@ -63,11 +63,6 @@ socket.on('chat message', (msg) => {
         messageContainer.appendChild(userInitials);
     }
 
-
-    // const userNameElement = document.createElement('div');
-    // userNameElement.textContent = isOwnMessage ? '' : msg.user;
-    // userNameElement.classList.add('user-name');
-    // messageContainer.appendChild(userNameElement);
 
     const timestampElement = document.createElement('div');
     const timestampOptions = {
@@ -137,5 +132,3 @@ const userTypingSocket = (nameFromURL, bool) => {
 
     socket.emit('user typing', nameFromURL, bool);
 }
-
-
