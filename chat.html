@@ -64,11 +64,12 @@
         <button class="btn btn-primary btn-sm" id="submit-button" type="submit">
           Enviar
         </button>
-      
+
       </form>
       <br>
-      <button class="btn btn-primary btn-sm" id="user-list-button" onclick="toggleUserListPopup()">Lista de
-        Usuários</button>
+      <button class="btn btn-primary btn-sm" id="user-list-button" onclick="toggleUserListPopup()">Mencionar @</button>
+      <button class="btn btn-primary btn-sm" id="user-list-button"
+        onclick="toggleUserListPostMessage()">Usuários</button>
     </div>
   </div>
 
@@ -81,7 +82,7 @@
     <input type="text" id="search-user" placeholder="Buscar usuário">
     <hr>
     <ul id="user-list" class="user-list-scroll"></ul>
-    
+
     <button class="btn btn-primary btn-sm" id="close-popup-button" onclick="toggleUserListPopup()">Fechar</button>
   </div>
 
@@ -90,6 +91,12 @@
       const userPopup = document.getElementById('user-list-popup');
       userPopup.style.display = userPopup.style.display === 'block' ? 'none' : 'block';
     }
+
+    function toggleUserListPostMessage() {
+      const message = 'message-sidebar';
+      window.parent.postMessage(message, '*');
+    }
+
 
     function toggleWebpagePopup() {
       const webpagePopup = document.getElementById('webpage-popup');
@@ -101,22 +108,22 @@
         const url = 'https://wilkor.github.io/plugin-emoji-chat-parse/';
         iframe.src = url;
       } else {
-    
+
         iframe.src = '';
       }
     }
 
     window.addEventListener('message', (event) => {
-      const emoji = event.data.Emoji; 
+      const emoji = event.data.Emoji;
       const messageInput = document.getElementById('message-input');
 
       if (messageInput.value) {
-      
+
         messageInput.value += ` ${String.fromCodePoint(parseInt(emoji, 16))}`;
       } else {
-       
+
         messageInput.value = String.fromCodePoint(parseInt(emoji, 16));
-      } 
+      }
       toggleWebpagePopup()
     });
 
