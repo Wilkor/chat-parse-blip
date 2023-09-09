@@ -58,7 +58,7 @@ socket.on('getRoomData', (data) => {
 
     const names = roomListNames.map(item => item.name);
     const combinations = generateCombinations(names);
-
+    openIframe(0, 'Equipe');
     function openIframe(index, user) {
 
         iframes.forEach((iframe, i) => {
@@ -82,7 +82,7 @@ socket.on('getRoomData', (data) => {
         const iframeElement = document.createElement('iframe');
         iframeElement.src = `http://127.0.0.1:5500/chat.html?name=${nameFromURL}&room=${roomByName}`;
         iframeElement.classList.add('your-iframe-class');
-        iframeElement.style.width = '430px';
+        iframeElement.style.width = '100%';
         iframeElement.style.height = '700px';
 
 
@@ -97,7 +97,7 @@ socket.on('getRoomData', (data) => {
             return `
             <li class="user-item">
             <i class="fa-regular fa-comment-dots"></i>
-                <span class="user-initials-popup"></span>
+                <span class="user-initials"></span>
                 <span class="user-name" style="cursor:pointer" title="${user.name}">${user.name}</span>
                 
             </li>`;
@@ -115,7 +115,7 @@ socket.on('getRoomData', (data) => {
                 return `
               <li class="user-item">
               <i class="fa-regular fa-comment-dots"></i>
-                <span class="user-initials-popup" ></span>
+                <span class="user-initials" ></span>
                 <span class="user-name" style="cursor:pointer" title="${user.name}">${user.name}</span>
                 
               </li>`;
@@ -137,7 +137,7 @@ socket.on('getRoomData', (data) => {
 
             // Adicione a classe .highlighted-user ao nome do usuário clicado
             target.classList.add('highlighted-user');
-
+            document.getElementById('open-sidebar').click()
             const index = Array.from(userList.children).indexOf(target.parentNode);
             openIframe(index, userName);
         }
