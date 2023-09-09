@@ -56,24 +56,39 @@
 
 <body>
 
-  <div class="container-chat">
 
-    <div class="sidebar-chat">
+  <button class="btn btn-primary" id="open-sidebar" type="button" style="display: none;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+    Button with data-bs-target
+  </button>
+  
+  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Usuários</h5>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body">
+      <div class="sidebar-cha">
 
-      <div class="user-list" id="user-list-popup">
-        <input type="text" id="search-user" placeholder="Buscar usuário">
-        <hr>
-        <ul id="user-list" class="user-list-scroll"></ul>
+        <div class="user-lis" id="user-list-popup">
+          <input type="text" id="search-user" placeholder="Buscar usuário">
+          <hr>
+          <ul id="user-list" class="user-list-scroll"></ul>
+        </div>
       </div>
     </div>
-
-    <div id="iframe"></div>
   </div>
+
+
+  <div id="iframe"></div>
 
 </body>
 <script src="socket-room.js?id=100"></script>
 <script>
   window.addEventListener('message', (event) => {
+
+     if(event.data === 'message-sidebar'){
+        document.getElementById('open-sidebar').click()
+     }
 
     const message = 'Olá, elemento pai!';
     window.parent.postMessage(message, '*');
