@@ -17,6 +17,7 @@ socket.emit('join room', { room: contractFromURL, name: nameFromURL, color: getR
 socket.emit('getRoomData', { status: true, room: contractFromURL });
 
 function generateCombinations(names) {
+
     const combinations = [];
     for (let i = 0; i < names.length; i++) {
         for (let j = 0; j < names.length; j++) {
@@ -48,7 +49,7 @@ const objEquipe = {
 
     "id": "122333",
     "name": "Equipe",
-    "room": "pontoparse"
+    "room": contractFromURL
 
 }
 
@@ -64,7 +65,6 @@ socket.on('getRoomData', (data) => {
     const idx = localStorage.getItem('last-room-index') || 0 
     const team = localStorage.getItem('last-room-userName') || 'Equipe';
 
-    console.log("index e time",idx, team)
     setTimeout(() => {
         openIframe(idx, team);
 

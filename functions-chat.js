@@ -9,11 +9,8 @@ let nameFromURL = ''
 
 window.addEventListener('message', (event) => {
 
-  roomFromURL = event.data.room
-  nameFromURL = event.data.name
-  // document.getElementById('room').value = event.data.room;
-  // document.getElementById('name').value = event.data.name;
-
+  roomFromURL = event.data.room;
+  nameFromURL = event.data.name;
 
   openChat(event.data.room, event.data.name, getRandomColor());
 
@@ -68,15 +65,6 @@ document.getElementById('submit-button').addEventListener('click', (event) => {
   }
 });
 
-// document.getElementById('join-button').addEventListener('click', () => {
-//   const room = roomFromURL
-//   const name = nameFromURL
-
-
-//   if (room.trim() !== '' && name.trim() !== '') {
-//     openChat(room, name);
-//   }
-// });
 
 function openChat(room, name, color) {
 
