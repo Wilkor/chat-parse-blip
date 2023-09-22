@@ -113,6 +113,8 @@
     }
 
     window.addEventListener('message', (event) => {
+
+      event.preventDefault(); 
       const emoji = event.data.Emoji;
       const messageInput = document.getElementById('message-input');
 

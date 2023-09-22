@@ -4,8 +4,15 @@ const socket = io('https://pontoparse.herokuapp.com/');
 
 let roomUserNames = [];
 let roomListNames = [];
+
+
+
 socket.on('user joined', (username) => {
-    addSystemMessage(`📍${username} entrou.`);
+ 
+   if(username) {
+
+       addSystemMessage(`📍${username} entrou.`);
+   }
 });
 
 socket.on('user left', (username) => {
@@ -23,6 +30,16 @@ socket.on('roomData', (data) => {
 });
 
 
+// window.addEventListener('message', (event) => {
+
+//     roomFromURL = event.data.room;
+//     nameFromURL = event.data.name;
+
+
+
+//   });
+
+
 socket.on('user typing', ({ username, isTyping }) => {
     const typingIndicator = document.getElementById('typing-indicator');
 
@@ -35,8 +52,14 @@ socket.on('user typing', ({ username, isTyping }) => {
 
 socket.on('chat message', (msg) => {
 
+    const infoDataClient = JSON.parse(localStorage.getItem('info-client-chat'));
+
+    nameFromURL = infoDataClient.name
+
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message-container');
+
+
 
     if (msg.user.toLowerCase() === nameFromURL.toLowerCase()) {
         messageContainer.classList.add('own');
@@ -53,7 +76,7 @@ socket.on('chat message', (msg) => {
 
     messageElement.classList.add('message');
     messageContainer.appendChild(messageElement);
-    
+
     if (!isOwnMessage) {
         const userInitials = document.createElement('div');
         userInitials.textContent = getInitials(msg.user);
@@ -81,8 +104,8 @@ socket.on('chat message', (msg) => {
     messageContainer.appendChild(timestampElement);
 
     const timestampClass = isOwnMessage ? 'own-timestamp' : 'other-timestamp';
-  timestampElement.classList.add(timestampClass); // Adiciona a classe de carimbo de data/hora apropriada
-  messageContainer.appendChild(timestampElement);
+    timestampElement.classList.add(timestampClass); // Adiciona a classe de carimbo de data/hora apropriada
+    messageContainer.appendChild(timestampElement);
 
     messagesElement.appendChild(messageContainer);
     messagesElement.scrollTop = messagesElement.scrollHeight;

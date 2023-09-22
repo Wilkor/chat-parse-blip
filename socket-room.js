@@ -62,14 +62,14 @@ socket.on('getRoomData', (data) => {
 
     const names = roomListNames.map(item => item.name);
     const combinations = generateCombinations(names);
-    const idx = localStorage.getItem('last-room-index') || 0 
+    const idx = localStorage.getItem('last-room-index') || 0
     const team = localStorage.getItem('last-room-userName') || 'Equipe';
 
     setTimeout(() => {
         openIframe(idx, team);
 
-    },1000 )
- 
+    }, 1000)
+
     function openIframe(index, user) {
         iframes.forEach((iframe, i) => {
             if (i === index) {
@@ -78,29 +78,31 @@ socket.on('getRoomData', (data) => {
                 iframe.classList.remove('show', 'active');
             }
         });
-    
+
         if (user === "Equipe") {
             roomByName = contractFromURL;
         } else {
             roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`)?.id || contractFromURL;
         }
-    
+
         const iframeElement = document.createElement('iframe');
         iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
         iframeElement.classList.add('your-iframe-class');
         iframeElement.style.width = '100%';
         iframeElement.style.height = '700px';
-    
+
         const iframeContainer = document.getElementById('iframe');
         iframeContainer.innerHTML = '';
         iframeContainer.appendChild(iframeElement);
-    
-       
+
+        localStorage.setItem('info-client-chat', JSON.stringify({ name: nameFromURL, room: roomByName }))
+
+
         iframeElement.addEventListener('load', () => {
-            iframeElement.contentWindow.postMessage({name: nameFromURL, room:roomByName});
+            iframeElement.contentWindow.postMessage({ name: nameFromURL, room: roomByName });
         });
     }
-    
+
 
 
     userList.innerHTML = roomListNames.map((user, index) => {
@@ -136,21 +138,21 @@ socket.on('getRoomData', (data) => {
 
 
     userList.addEventListener('click', (event) => {
-      
+
         const target = event.target;
 
         if (target) {
-            event.preventDefault(); 
+            event.preventDefault();
             if (target.classList.contains('user-name')) {
                 const userName = target.textContent;
-    
-                
+
+
                 const userNames = document.querySelectorAll('.user-name');
                 userNames.forEach(name => {
                     name.classList.remove('highlighted-user');
                 });
-    
-        
+
+
                 target.classList.add('highlighted-user');
                 document.getElementById('open-sidebar').click()
                 const index = Array.from(userList.children).indexOf(target.parentNode);
@@ -159,7 +161,7 @@ socket.on('getRoomData', (data) => {
                 openIframe(index, userName);
             }
         }
-        
+
 
     });
 
@@ -168,5 +170,4 @@ socket.on('getRoomData', (data) => {
 function getRandomColor() {
     const colors = ['#9a53ff', "#d50000", "#4dcb7b"];
     return colors[Math.floor(Math.random() * colors.length)];
-  }
-  
+}
