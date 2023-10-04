@@ -1,5 +1,5 @@
-const socket = io('https://pontoparse.herokuapp.com/');
-//const socket = io('http://localhost:3333');
+//const socket = io('https://pontoparse.herokuapp.com/');
+const socket = io('http://localhost:3333');
 
 
 let roomUserNames = [];
@@ -75,6 +75,7 @@ socket.on('chat message', (msg) => {
         const audioElement = document.createElement('audio');
         audioElement.controls = true;
         audioElement.src = msg.text;
+        messageContainerAudio.classList.add('message');
         messageContainerAudio.appendChild(audioElement);
         messageContainer.appendChild(messageContainerAudio);
 
