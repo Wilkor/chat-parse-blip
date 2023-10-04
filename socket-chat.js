@@ -8,11 +8,11 @@ let roomListNames = [];
 
 
 socket.on('user joined', (username) => {
- 
-   if(username) {
 
-       addSystemMessage(`📍${username} entrou.`);
-   }
+    if (username) {
+
+        addSystemMessage(`📍${username} entrou.`);
+    }
 });
 
 socket.on('user left', (username) => {
@@ -63,11 +63,21 @@ socket.on('chat message', (msg) => {
 
     const isOwnMessage = msg.user.toLowerCase() === nameFromURL.toLowerCase();
 
+
     if (msg.image) {
         const imageElement = document.createElement('img');
         imageElement.src = msg.text; // Assume que msg.image contém o base64 da imagem
         imageElement.classList.add('message');
         messageContainer.appendChild(imageElement);
+    } else if (msg.audio) {
+        const messageContainerAudio = document.createElement('div');
+        const audioElement = document.createElement('audio');
+        audioElement.controls = true;
+        audioElement.src = msg.text;
+        messageContainerAudio.classList.add('message');
+        messageContainerAudio.appendChild(audioElement);
+        messageContainer.appendChild(messageContainerAudio);
+
     } else {
         const messageElement = document.createElement('div');
         const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text, msg.user.toLowerCase(), roomUserNames, nameFromURL.toLowerCase());
@@ -137,7 +147,7 @@ function highlightMentions(message, user, roomUserNames, nameFromURL) {
 socket.on('cached messages', (cachedMessages) => {
 
     cachedMessages.forEach((msg) => {
-        addMessageToChat(msg.user, msg.text, msg.timestamp, msg.bubbleColor, msg.image);
+        addMessageToChat(msg.user, msg.text, msg.timestamp, msg.bubbleColor, msg.image, msg.audio);
     });
 });
 

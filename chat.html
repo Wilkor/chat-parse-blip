@@ -57,9 +57,12 @@
       <form class="input-container" id="chat-form">
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
         <label for="image-input" class="custom-file-upload">
-         📸
+          📸
         </label>
         <input type="file" id="image-input" accept="image/*">
+
+        <button id="recordBtn">Iniciar Gravação de Voz</button>
+       
 
         <button class="btn btn-secondary btn-sm" id="emoji-button" type="button" onclick="toggleWebpagePopup()">
           😃
@@ -134,6 +137,8 @@
     });
 
   </script>
+
+
 
   <script src="socket-chat.js"></script>
   <script src="functions-chat.js"></script>

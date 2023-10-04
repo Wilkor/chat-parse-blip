@@ -80,7 +80,7 @@ function openChat(room, name, color) {
 
 
 
-function addMessageToChat(user, text, timestamp, bubbleColor, image) {
+function addMessageToChat(user, text, timestamp, bubbleColor, image, audio) {
 
   const messageContainer = document.createElement('div');
   messageContainer.classList.add('message-container');
@@ -89,18 +89,21 @@ function addMessageToChat(user, text, timestamp, bubbleColor, image) {
   messageContainer.classList.add(isOwnMessage ? 'own' : 'other');
 
 
-  // const messageElement = document.createElement('div');
-  // messageElement.textContent = text;
-  // messageElement.classList.add('message');
-  // messageContainer.appendChild(messageElement);
-
-
   if (image) {
     const imageElement = document.createElement('img');
     imageElement.src = text;
     imageElement.classList.add('message');
     messageContainer.appendChild(imageElement);
-  } else {
+  } else if (audio) {
+    const messageContainerAudio = document.createElement('div');
+    const audioElement = document.createElement('audio');
+    audioElement.controls = true;
+    audioElement.src = text;
+    messageContainerAudio.classList.add('message');
+    messageContainerAudio.appendChild(audioElement);
+    messageContainer.appendChild(messageContainerAudio);
+    
+} else {
     const messageElement = document.createElement('div');
     messageElement.textContent = text;
     messageElement.classList.add('message');
@@ -287,5 +290,74 @@ imageInput.addEventListener('change', (event) => {
     reader.readAsDataURL(file);
   }
 });
+
+
+const recordBtn = document.getElementById('recordBtn');
+const audioPlayer = document.getElementById('audioPlayer');
+let mediaRecorder;
+let chunks = [];
+
+recordBtn.addEventListener('click', () => {
+
+  if (recordBtn.textContent === 'Iniciar Gravação de Voz') {
+    startRecording();
+    recordBtn.textContent = 'Parar Gravação de Voz';
+  } else {
+    stopRecording();
+    recordBtn.textContent = 'Iniciar Gravação de Voz';
+  }
+});
+
+function startRecording() {
+
+  const timestampOptions = {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+    timeZone: 'America/Sao_Paulo'
+  };
+  const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
+
+
+  navigator.mediaDevices.getUserMedia({ audio: true })
+    .then(function (stream) {
+      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder.ondataavailable = function (event) {
+        chunks.push(event.data);
+      };
+
+      mediaRecorder.onstop = function () {
+        const audioBlob = new Blob(chunks, { type: 'audio/wav' });
+        const audioUrl = URL.createObjectURL(audioBlob);
+
+        chunks = [];
+        const message = {
+
+          message: audioUrl,
+          timestamp,
+          bubbleColor: getRandomColor(),
+          image: false,
+          audio: true
+        }
+  
+        sendMessageSocket(message);
+    
+      };
+
+      mediaRecorder.start();
+    })
+    .catch(function (err) {
+      console.error('Erro ao acessar o microfone: ', err);
+    });
+}
+
+function stopRecording() {
+  if (mediaRecorder.state === 'recording') {
+    mediaRecorder.stop();
+  }
+}
 
 
