@@ -80,13 +80,13 @@ function openChat(room, name, color) {
 
 
 
-function addMessageToChat(user, text, timestamp, bubbleColor,image) {
+function addMessageToChat(user, text, timestamp, bubbleColor, image) {
 
   const messageContainer = document.createElement('div');
   messageContainer.classList.add('message-container');
 
   const isOwnMessage = user.toLowerCase() === nameFromURL.toLowerCase();
-  messageContainer.classList.add(isOwnMessage ? 'own' : 'other'); 
+  messageContainer.classList.add(isOwnMessage ? 'own' : 'other');
 
 
   const messageElement = document.createElement('div');
@@ -97,10 +97,16 @@ function addMessageToChat(user, text, timestamp, bubbleColor,image) {
 
   if (image) {
     const imageElement = document.createElement('img');
-    imageElement.src = text; 
+    imageElement.src = text;
     imageElement.classList.add('message');
     messageContainer.appendChild(imageElement);
-} 
+  } else {
+    const messageElement = document.createElement('div');
+    messageElement.textContent = text;
+    messageElement.classList.add('message');
+    messageContainer.appendChild(messageElement);
+
+  }
 
 
   if (!isOwnMessage) {
