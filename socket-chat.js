@@ -51,15 +51,11 @@ socket.on('user typing', ({ username, isTyping }) => {
 });
 
 socket.on('chat message', (msg) => {
-
     const infoDataClient = JSON.parse(localStorage.getItem('info-client-chat'));
-
     nameFromURL = infoDataClient.name
 
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message-container');
-
-
 
     if (msg.user.toLowerCase() === nameFromURL.toLowerCase()) {
         messageContainer.classList.add('own');
@@ -67,15 +63,18 @@ socket.on('chat message', (msg) => {
 
     const isOwnMessage = msg.user.toLowerCase() === nameFromURL.toLowerCase();
 
-
-    const messageElement = document.createElement('div');
-
-    // Aplica o destaque de menções
-    const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text, msg.user.toLowerCase(), roomUserNames, nameFromURL.toLowerCase());
-    messageElement.innerHTML = `${messageTextWithMentions}`;
-
-    messageElement.classList.add('message');
-    messageContainer.appendChild(messageElement);
+    if (msg.image) {
+        const imageElement = document.createElement('img');
+        imageElement.src = msg.text; // Assume que msg.image contém o base64 da imagem
+        imageElement.classList.add('message');
+        messageContainer.appendChild(imageElement);
+    } else {
+        const messageElement = document.createElement('div');
+        const messageTextWithMentions = isOwnMessage ? msg.text : highlightMentions(msg.text, msg.user.toLowerCase(), roomUserNames, nameFromURL.toLowerCase());
+        messageElement.innerHTML = `${messageTextWithMentions}`;
+        messageElement.classList.add('message');
+        messageContainer.appendChild(messageElement);
+    }
 
     if (!isOwnMessage) {
         const userInitials = document.createElement('div');
@@ -85,7 +84,6 @@ socket.on('chat message', (msg) => {
         userInitials.setAttribute('title', msg.user);
         messageContainer.appendChild(userInitials);
     }
-
 
     const timestampElement = document.createElement('div');
     const timestampOptions = {
@@ -110,6 +108,7 @@ socket.on('chat message', (msg) => {
     messagesElement.appendChild(messageContainer);
     messagesElement.scrollTop = messagesElement.scrollHeight;
 });
+
 
 function highlightMentions(message, user, roomUserNames, nameFromURL) {
     const regexPattern = /@([\w\sÀ-ÖØ-öø-ÿ]+)/g;
@@ -138,7 +137,7 @@ function highlightMentions(message, user, roomUserNames, nameFromURL) {
 socket.on('cached messages', (cachedMessages) => {
 
     cachedMessages.forEach((msg) => {
-        addMessageToChat(msg.user, msg.text, msg.timestamp, msg.bubbleColor);
+        addMessageToChat(msg.user, msg.text, msg.timestamp, msg.bubbleColor, msg.image);
     });
 });
 

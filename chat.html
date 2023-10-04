@@ -15,7 +15,6 @@
     crossorigin="anonymous"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
-    
     .popup-container {
       display: none;
       position: fixed;
@@ -57,6 +56,11 @@
       <div id="typing-indicator" class="user-name"></div>
       <form class="input-container" id="chat-form">
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
+        <label for="image-input" class="custom-file-upload">
+         📸
+        </label>
+        <input type="file" id="image-input" accept="image/*">
+
         <button class="btn btn-secondary btn-sm" id="emoji-button" type="button" onclick="toggleWebpagePopup()">
           😃
         </button>
@@ -70,6 +74,7 @@
       <button class="btn btn-primary btn-sm" id="user-list-button"
         onclick="toggleUserListPostMessage()">Usuários</button>
     </div>
+
   </div>
 
   <div class="popup-container" id="webpage-popup">
@@ -114,7 +119,7 @@
 
     window.addEventListener('message', (event) => {
 
-      event.preventDefault(); 
+      event.preventDefault();
       const emoji = event.data.Emoji;
       const messageInput = document.getElementById('message-input');
 

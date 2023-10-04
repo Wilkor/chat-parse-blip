@@ -54,7 +54,8 @@ document.getElementById('submit-button').addEventListener('click', (event) => {
   const message = {
     message: messageInput.value,
     timestamp,
-    bubbleColor: getRandomColor()
+    bubbleColor: getRandomColor(),
+    image: false
   }
 
 
@@ -79,18 +80,28 @@ function openChat(room, name, color) {
 
 
 
-function addMessageToChat(user, text, timestamp, bubbleColor) {
+function addMessageToChat(user, text, timestamp, bubbleColor,image) {
+
   const messageContainer = document.createElement('div');
   messageContainer.classList.add('message-container');
 
   const isOwnMessage = user.toLowerCase() === nameFromURL.toLowerCase();
-  messageContainer.classList.add(isOwnMessage ? 'own' : 'other'); // Adiciona a classe 'own' ou 'other'
+  messageContainer.classList.add(isOwnMessage ? 'own' : 'other'); 
 
 
   const messageElement = document.createElement('div');
   messageElement.textContent = text;
   messageElement.classList.add('message');
   messageContainer.appendChild(messageElement);
+
+
+  if (image) {
+    const imageElement = document.createElement('img');
+    imageElement.src = text; 
+    imageElement.classList.add('message');
+    messageContainer.appendChild(imageElement);
+} 
+
 
   if (!isOwnMessage) {
     const userNameElement = document.createElement('div');
@@ -223,3 +234,52 @@ userList.addEventListener('click', (event) => {
     userListPopup.style.display = 'none';
   }
 });
+
+
+const imageInput = document.getElementById('image-input');
+const imageButton = document.getElementById('image-button');
+const chatForm = document.getElementById('chat-form');
+
+
+// Evento acionado quando uma imagem é selecionada
+imageInput.addEventListener('change', (event) => {
+
+  event.preventDefault();
+
+  const timestampOptions = {
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+    timeZone: 'America/Sao_Paulo'
+  };
+  const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
+
+
+
+  const file = event.target.files[0];
+  if (file) {
+    const reader = new FileReader();
+
+    reader.onload = (loadEvent) => {
+      const imageData = loadEvent.target.result; // Dados da imagem como base64
+
+
+      const message = {
+        message: imageData,
+        timestamp,
+        bubbleColor: getRandomColor(),
+        image: true
+      }
+
+      sendMessageSocket(message);
+    };
+
+    // Lê o arquivo como base64
+    reader.readAsDataURL(file);
+  }
+});
+
+

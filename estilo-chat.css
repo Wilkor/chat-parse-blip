@@ -372,3 +372,24 @@ body {
       border: 1px solid #ccc;
       border-radius: 5px;
     }
+/* Esconde o input de arquivo padrão */
+#image-input {
+  display: none;
+}
+
+/* Estilo para o rótulo personalizado */
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: transparent;
+  color: rgb(14, 13, 13);
+
+  border-radius: 5px;
+}
+
+/* Adiciona um estilo quando o mouse passa por cima do rótulo */
+.custom-file-upload:hover {
+  background-color: rgba(164, 172, 164, 0.2); /* Adicione um leve destaque de fundo quando o mouse passa por cima */
+}

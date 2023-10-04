@@ -5,7 +5,6 @@ let roomListNamesSocket = [];
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 
-console.log(urlSearchParams);
 
 const roomFromURL = urlSearchParams.get('room').toLowerCase();
 const nameFromURL = urlSearchParams.get('name').toLowerCase();
@@ -86,7 +85,8 @@ socket.on('getRoomData', (data) => {
         }
 
         const iframeElement = document.createElement('iframe');
-        iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
+         iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
+        //iframeElement.src = `/chat.html?`;
         iframeElement.classList.add('your-iframe-class');
         iframeElement.style.width = '100%';
         iframeElement.style.height = '700px';
