@@ -89,10 +89,10 @@ function addMessageToChat(user, text, timestamp, bubbleColor, image) {
   messageContainer.classList.add(isOwnMessage ? 'own' : 'other');
 
 
-  const messageElement = document.createElement('div');
-  messageElement.textContent = text;
-  messageElement.classList.add('message');
-  messageContainer.appendChild(messageElement);
+  // const messageElement = document.createElement('div');
+  // messageElement.textContent = text;
+  // messageElement.classList.add('message');
+  // messageContainer.appendChild(messageElement);
 
 
   if (image) {
