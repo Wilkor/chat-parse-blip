@@ -51,6 +51,7 @@ socket.on('user typing', ({ username, isTyping }) => {
 });
 
 socket.on('chat message', (msg) => {
+
     const infoDataClient = JSON.parse(localStorage.getItem('info-client-chat'));
     nameFromURL = infoDataClient.name
 
@@ -74,7 +75,6 @@ socket.on('chat message', (msg) => {
         const audioElement = document.createElement('audio');
         audioElement.controls = true;
         audioElement.src = msg.text;
-        messageContainerAudio.classList.add('message');
         messageContainerAudio.appendChild(audioElement);
         messageContainer.appendChild(messageContainerAudio);
 
