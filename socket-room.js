@@ -1,5 +1,5 @@
-//const socket = io('https://pontoparse.herokuapp.com/');
-const socket = io('http://localhost:3333');
+const socket = io('https://pontoparse.herokuapp.com/');
+//const socket = io('http://localhost:3333');
 
 let roomListNamesSocket = [];
 
@@ -85,8 +85,8 @@ socket.on('getRoomData', (data) => {
         }
 
         const iframeElement = document.createElement('iframe');
-        //iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
-        iframeElement.src = `/chat.html?`;
+        iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
+        //iframeElement.src = `/chat.html?`;
         iframeElement.classList.add('your-iframe-class');
         iframeElement.style.width = '100%';
         iframeElement.style.height = '700px';
