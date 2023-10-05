@@ -82,6 +82,8 @@ function openChat(room, name, color) {
 
 function addMessageToChat(user, text, timestamp, bubbleColor, image, audio) {
 
+  console.log(text)
+
   const messageContainer = document.createElement('div');
   messageContainer.classList.add('message-container');
 
@@ -95,15 +97,19 @@ function addMessageToChat(user, text, timestamp, bubbleColor, image, audio) {
     imageElement.classList.add('message');
     messageContainer.appendChild(imageElement);
   } else if (audio) {
+
+    const blob = new Blob([audio], { type: 'audio/wav' });
+    const audioUrl = URL.createObjectURL(blob);
+
     const messageContainerAudio = document.createElement('div');
     const audioElement = document.createElement('audio');
     audioElement.controls = true;
-    audioElement.src = text;
+    audioElement.src = audioUrl;
     messageContainerAudio.classList.add('message');
     messageContainerAudio.appendChild(audioElement);
     messageContainer.appendChild(messageContainerAudio);
-    
-} else {
+
+  } else {
     const messageElement = document.createElement('div');
     messageElement.textContent = text;
     messageElement.classList.add('message');
@@ -127,7 +133,7 @@ function addMessageToChat(user, text, timestamp, bubbleColor, image, audio) {
   timestampElement.classList.add('timestamp');
 
   const timestampClass = isOwnMessage ? 'own-timestamp' : 'other-timestamp';
-  timestampElement.classList.add(timestampClass); // Adiciona a classe de carimbo de data/hora apropriada
+  timestampElement.classList.add(timestampClass);
   messageContainer.appendChild(timestampElement);
 
   messagesElement.appendChild(messageContainer);
@@ -321,7 +327,6 @@ function startRecording() {
   };
   const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
 
-
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then(function (stream) {
       mediaRecorder = new MediaRecorder(stream);
@@ -331,26 +336,24 @@ function startRecording() {
 
       mediaRecorder.onstop = function () {
         const audioBlob = new Blob(chunks, { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-
         chunks = [];
-        const message = {
 
-          message: audioUrl,
+        const message = {
+          message: audioBlob,
           timestamp,
           bubbleColor: getRandomColor(),
           image: false,
           audio: true
         }
-  
         sendMessageSocket(message);
-    
+
       };
 
       mediaRecorder.start();
     })
     .catch(function (err) {
-      return 
+      console.log(err)
+      return
     });
 }
 

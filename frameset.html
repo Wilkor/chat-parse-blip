@@ -47,20 +47,20 @@
   .highlighted-user {
     font-weight: bold;
     color: #0d6efd;
-   
+
     text-transform: capitalize;
 
   }
-  
 </style>
 
 <body>
 
 
-  <button class="btn btn-primary" id="open-sidebar" type="button" style="display: none;" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
+  <button class="btn btn-primary" id="open-sidebar" type="button" style="display: none;" data-bs-toggle="offcanvas"
+    data-bs-target="#offcanvasExample" aria-controls="offcanvasExample">
     Button with data-bs-target
   </button>
-  
+
   <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
     <div class="offcanvas-header">
       <h5 class="offcanvas-title" id="offcanvasExampleLabel">Usuários</h5>
@@ -86,14 +86,24 @@
 <script>
   window.addEventListener('message', (event) => {
     event.preventDefault();
-     if(event.data === 'message-sidebar'){
-        document.getElementById('open-sidebar').click();
-       return
-     }
+    if (event.data === 'message-sidebar') {
+      document.getElementById('open-sidebar').click();
+      return
+    }
+
+    if (event.data === 'send-audio') {
+      console.log('quando cliquei em audio')
+
+      const message = 'send-audio-father';
+      window.parent.postMessage(message, '*');
+
+      return
+    }
+
 
     const message = 'Olá, elemento pai!';
     window.parent.postMessage(message, '*');
-    
+
   });
 
 </script>
