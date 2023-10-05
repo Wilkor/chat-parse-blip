@@ -64,6 +64,8 @@ socket.on('getRoomData', (data) => {
     const idx = localStorage.getItem('last-room-index') || 0
     const team = localStorage.getItem('last-room-userName') || 'Equipe';
 
+
+
     let iframeElement = document.createElement('iframe');
     iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
     //iframeElement.src = `/chat.html?`;
@@ -81,7 +83,7 @@ socket.on('getRoomData', (data) => {
 
 
 
-    function openIframe(index, user, iframeElement) {
+    function openIframe(idx, team, iframeElement) {
         console.log('no iframe')
         iframes.forEach((iframe, i) => {
             if (i === index) {
