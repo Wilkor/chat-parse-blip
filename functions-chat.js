@@ -258,8 +258,9 @@ const chatForm = document.getElementById('chat-form');
 
 // Evento acionado quando uma imagem é selecionada
 imageInput.addEventListener('change', (event) => {
-
   event.preventDefault();
+
+  const allowedImageTypes = ['image/jpeg', 'image/png', 'image/gif']; // Tipos MIME de imagens permitidos
 
   const timestampOptions = {
     hour: 'numeric',
@@ -272,15 +273,14 @@ imageInput.addEventListener('change', (event) => {
   };
   const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
 
-
-
   const file = event.target.files[0];
-  if (file) {
+  
+  // Verifica se um arquivo foi selecionado e se é uma imagem válida
+  if (file && allowedImageTypes.includes(file.type)) {
     const reader = new FileReader();
 
     reader.onload = (loadEvent) => {
       const imageData = loadEvent.target.result; // Dados da imagem como base64
-
 
       const message = {
         message: imageData,
@@ -294,6 +294,9 @@ imageInput.addEventListener('change', (event) => {
 
     // Lê o arquivo como base64
     reader.readAsDataURL(file);
+  } else {
+    // Se o arquivo não é uma imagem válida, exiba uma mensagem de erro ao usuário
+    alert('Por favor, selecione uma imagem válida (JPEG, PNG ou GIF).');
   }
 });
 
