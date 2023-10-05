@@ -98,6 +98,8 @@ function openIframe(index, user, iframeElement) {
 
 
 socket.on('getRoomData', (data) => {
+
+    console.log('getRoomData', data)
     roomListNames = data.users;
 
 
