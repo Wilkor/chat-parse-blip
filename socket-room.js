@@ -90,10 +90,18 @@ socket.on('getRoomData', (data) => {
         iframeElement.classList.add('your-iframe-class');
         iframeElement.style.width = '100%';
         iframeElement.style.height = '700px';
+        iframeElement.sandbox.add('allow-same-origin');
+        iframeElement.sandbox.add('allow-scripts');
+        iframeElement.sandbox.add('allow-popups');
+        iframeElement.sandbox.add('allow-forms');
+        iframeElement.sandbox.add('allow-modals');
+        iframeElement.sandbox.add('allow-orientation-lock');
+        iframeElement.sandbox.add('allow-microphone');
+
 
         const iframeContainer = document.getElementById('iframe');
         iframeContainer.innerHTML = '';
-        
+
         iframeContainer.appendChild(iframeElement);
 
         localStorage.setItem('info-client-chat', JSON.stringify({ name: nameFromURL, room: roomByName }))
