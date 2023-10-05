@@ -52,21 +52,23 @@ const objEquipe = {
 
 }
 
-socket.on('getRoomData', (data) => {
-    roomListNames = data.users;
+function openIframe(index, user) {
+      
+    iframes.forEach((iframe, i) => {
+        if (i === index) {
+            iframe.classList.add('show', 'active');
+        } else {
+            iframe.classList.remove('show', 'active');
+        }
+    });
 
+    if (user === "Equipe") {
+        roomByName = contractFromURL;
+    } else {
+        roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`)?.id || contractFromURL;
+    }
 
-    roomListNames.push(objEquipe)
-
-
-    const names = roomListNames.map(item => item.name);
-    const combinations = generateCombinations(names);
-    const idx = localStorage.getItem('last-room-index') || 0
-    const team = localStorage.getItem('last-room-userName') || 'Equipe';
-
-
-
-    let iframeElement = document.createElement('iframe');
+    const iframeElement = document.createElement('iframe');
     iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
     //iframeElement.src = `/chat.html?`;
     iframeElement.classList.add('your-iframe-class');
@@ -82,42 +84,36 @@ socket.on('getRoomData', (data) => {
 
 
 
+    const iframeContainer = document.getElementById('iframe');
+    iframeContainer.innerHTML = '';
 
-    function openIframe(idx, team, iframeElement) {
-        console.log('no iframe')
-        iframes.forEach((iframe, i) => {
-            if (i === idx) {
-                iframe.classList.add('show', 'active');
-            } else {
-                iframe.classList.remove('show', 'active');
-            }
-        });
+    iframeContainer.appendChild(iframeElement);
 
-        if (user === "Equipe") {
-            roomByName = contractFromURL;
-        } else {
-            roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`)?.id || contractFromURL;
-        }
+    localStorage.setItem('info-client-chat', JSON.stringify({ name: nameFromURL, room: roomByName }))
 
-        // Atualize apenas as propriedades necessárias do iframe
-        iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
-        iframeElement.contentWindow.location.href = iframeElement.src; // Evita recarregamento do iframe
+
+    iframeElement.addEventListener('load', () => {
         iframeElement.contentWindow.postMessage({ name: nameFromURL, room: roomByName });
+    });
+}
 
 
-        // const iframeContainer = document.getElementById('iframe');
-        // iframeContainer.innerHTML = '';
-
-        // iframeContainer.appendChild(iframeElement);
-
-        // localStorage.setItem('info-client-chat', JSON.stringify({ name: nameFromURL, room: roomByName }))
+socket.on('getRoomData', (data) => {
+    roomListNames = data.users;
 
 
-        // iframeElement.addEventListener('load', () => {
-        //     iframeElement.contentWindow.postMessage({ name: nameFromURL, room: roomByName });
-        // });
-    }
+    roomListNames.push(objEquipe)
 
+
+    const names = roomListNames.map(item => item.name);
+    const combinations = generateCombinations(names);
+    const idx = localStorage.getItem('last-room-index') || 0
+    const team = localStorage.getItem('last-room-userName') || 'Equipe';
+
+    setTimeout(() => {
+        openIframe(idx, team);
+
+    }, 1000)
 
 
     userList.innerHTML = roomListNames.map((user, index) => {
