@@ -3,18 +3,19 @@ const messagesElement = document.getElementById('messages');
 const messageInput = document.getElementById('message-input');
 
 const urlSearchParams = new URLSearchParams(window.location.search);
+const roomFromURL = urlSearchParams.get('room').toLowerCase();
+const nameFromURL = urlSearchParams.get('name').toLowerCase();
 
-let roomFromURL = ''
-let nameFromURL = ''
 
-window.addEventListener('message', (event) => {
+openChat(roomFromURL, nameFromURL, getRandomColor());
+// window.addEventListener('message', (event) => {
 
-  roomFromURL = event.data.room;
-  nameFromURL = event.data.name;
+//   roomFromURL = event.data.room;
+//   nameFromURL = event.data.name;
 
-  openChat(event.data.room, event.data.name, getRandomColor());
+//   openChat(event.data.room, event.data.name, getRandomColor());
 
-});
+// });
 
 const typingIndicatorTimeout = 1000;
 

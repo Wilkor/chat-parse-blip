@@ -52,8 +52,8 @@ socket.on('user typing', ({ username, isTyping }) => {
 
 socket.on('chat message', (msg) => {
 
-    const infoDataClient = JSON.parse(localStorage.getItem('info-client-chat'));
-    nameFromURL = infoDataClient.name
+    // const infoDataClient = JSON.parse(localStorage.getItem('info-client-chat'));
+    // nameFromURL = infoDataClient.name
 
     const messageContainer = document.createElement('div');
     messageContainer.classList.add('message-container');
