@@ -93,6 +93,7 @@ socket.on('getRoomData', (data) => {
 
         const iframeContainer = document.getElementById('iframe');
         iframeContainer.innerHTML = '';
+        
         iframeContainer.appendChild(iframeElement);
 
         localStorage.setItem('info-client-chat', JSON.stringify({ name: nameFromURL, room: roomByName }))
