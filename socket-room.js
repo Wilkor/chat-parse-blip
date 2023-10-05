@@ -98,6 +98,14 @@ socket.on('getRoomData', (data) => {
         iframeElement.sandbox.add('allow-orientation-lock');
         iframeElement.sandbox.add('allow-microphone');
 
+        // Obtenha a referência para o seu <iframe>
+        const meuIframe = document.querySelector('.your-iframe-class');
+
+        // Para evitar que o iframe atualize, defina sua URL para a mesma URL atual
+        meuIframe.contentWindow.location.href = meuIframe.contentWindow.location.href;
+
+
+
 
         const iframeContainer = document.getElementById('iframe');
         iframeContainer.innerHTML = '';
