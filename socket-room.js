@@ -38,7 +38,8 @@ const closePopupButton = document.getElementById('close-popup-button');
 const userList = document.getElementById('user-list');
 const searchUserInput = document.getElementById('search-user');
 const messageInputSearch = document.getElementById('message-input');
-
+const iframeElement = document.createElement('iframe');
+iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
 
 let iframes = [];
 let roomByName;
@@ -52,7 +53,7 @@ const objEquipe = {
 
 }
 
-function openIframe(index, user) {
+function openIframe(index, user, iframeElement) {
       
     iframes.forEach((iframe, i) => {
         if (i === index) {
@@ -68,9 +69,7 @@ function openIframe(index, user) {
         roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`)?.id || contractFromURL;
     }
 
-    const iframeElement = document.createElement('iframe');
-    iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
-    //iframeElement.src = `/chat.html?`;
+
     iframeElement.classList.add('your-iframe-class');
     iframeElement.style.width = '100%';
     iframeElement.style.height = '700px';
@@ -111,7 +110,7 @@ socket.on('getRoomData', (data) => {
     const team = localStorage.getItem('last-room-userName') || 'Equipe';
 
     setTimeout(() => {
-        openIframe(idx, team);
+        openIframe(idx, team, iframeElement);
 
     }, 1000)
 
