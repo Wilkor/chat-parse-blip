@@ -54,7 +54,7 @@ const objEquipe = {
 }
 
 function openIframe(index, user, iframeElement) {
-      
+
     iframes.forEach((iframe, i) => {
         if (i === index) {
             iframe.classList.add('show', 'active');
@@ -109,10 +109,10 @@ socket.on('getRoomData', (data) => {
     const idx = localStorage.getItem('last-room-index') || 0
     const team = localStorage.getItem('last-room-userName') || 'Equipe';
 
-    setTimeout(() => {
-        openIframe(idx, team, iframeElement);
 
-    }, 1000)
+    openIframe(idx, team, iframeElement);
+
+
 
 
     userList.innerHTML = roomListNames.map((user, index) => {
