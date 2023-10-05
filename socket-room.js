@@ -69,6 +69,21 @@ socket.on('getRoomData', (data) => {
 
     }, 1000)
 
+    const iframeElement = document.createElement('iframe');
+    iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
+    //iframeElement.src = `/chat.html?`;
+    iframeElement.classList.add('your-iframe-class');
+    iframeElement.style.width = '100%';
+    iframeElement.style.height = '700px';
+    iframeElement.sandbox.add('allow-same-origin');
+    iframeElement.sandbox.add('allow-scripts');
+    iframeElement.sandbox.add('allow-popups');
+    iframeElement.sandbox.add('allow-forms');
+    iframeElement.sandbox.add('allow-modals');
+    iframeElement.sandbox.add('allow-orientation-lock');
+    iframeElement.sandbox.add('allow-microphone');
+
+
     function openIframe(index, user) {
         console.log('no iframe')
         iframes.forEach((iframe, i) => {
@@ -85,33 +100,23 @@ socket.on('getRoomData', (data) => {
             roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`)?.id || contractFromURL;
         }
 
-        const iframeElement = document.createElement('iframe');
-        iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
-        //iframeElement.src = `/chat.html?`;
-        iframeElement.classList.add('your-iframe-class');
-        iframeElement.style.width = '100%';
-        iframeElement.style.height = '700px';
-        iframeElement.sandbox.add('allow-same-origin');
-        iframeElement.sandbox.add('allow-scripts');
-        iframeElement.sandbox.add('allow-popups');
-        iframeElement.sandbox.add('allow-forms');
-        iframeElement.sandbox.add('allow-modals');
-        iframeElement.sandbox.add('allow-orientation-lock');
-        iframeElement.sandbox.add('allow-microphone');
+    // Atualize apenas as propriedades necessárias do iframe
+    iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
+    iframeElement.contentWindow.location.href = iframeElement.src; // Evita recarregamento do iframe
+    iframeElement.contentWindow.postMessage({ name: nameFromURL, room: roomByName });
 
 
+        // const iframeContainer = document.getElementById('iframe');
+        // iframeContainer.innerHTML = '';
 
-        const iframeContainer = document.getElementById('iframe');
-        iframeContainer.innerHTML = '';
+        // iframeContainer.appendChild(iframeElement);
 
-        iframeContainer.appendChild(iframeElement);
-
-        localStorage.setItem('info-client-chat', JSON.stringify({ name: nameFromURL, room: roomByName }))
+        // localStorage.setItem('info-client-chat', JSON.stringify({ name: nameFromURL, room: roomByName }))
 
 
-        iframeElement.addEventListener('load', () => {
-            iframeElement.contentWindow.postMessage({ name: nameFromURL, room: roomByName });
-        });
+        // iframeElement.addEventListener('load', () => {
+        //     iframeElement.contentWindow.postMessage({ name: nameFromURL, room: roomByName });
+        // });
     }
 
 
