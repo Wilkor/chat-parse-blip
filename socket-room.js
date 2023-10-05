@@ -69,7 +69,7 @@ socket.on('getRoomData', (data) => {
 
     }, 1000)
 
-    const iframeElement = document.createElement('iframe');
+    let iframeElement = document.createElement('iframe');
     iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
     //iframeElement.src = `/chat.html?`;
     iframeElement.classList.add('your-iframe-class');
@@ -84,7 +84,7 @@ socket.on('getRoomData', (data) => {
     iframeElement.sandbox.add('allow-microphone');
 
 
-    function openIframe(index, user) {
+    function openIframe(index, user, iframeElement) {
         console.log('no iframe')
         iframes.forEach((iframe, i) => {
             if (i === index) {
