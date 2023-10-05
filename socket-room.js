@@ -70,6 +70,7 @@ socket.on('getRoomData', (data) => {
     }, 1000)
 
     function openIframe(index, user) {
+        console.log('no iframe')
         iframes.forEach((iframe, i) => {
             if (i === index) {
                 iframe.classList.add('show', 'active');
