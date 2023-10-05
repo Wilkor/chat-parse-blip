@@ -329,7 +329,7 @@ function startRecording() {
 
   navigator.mediaDevices.getUserMedia({ audio: true })
     .then(function (stream) {
-      mediaRecorder = new MediaRecorder(stream);
+      mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/wav' });
       mediaRecorder.ondataavailable = function (event) {
         chunks.push(event.data);
       };
