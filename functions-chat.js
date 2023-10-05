@@ -327,9 +327,9 @@ function startRecording() {
   };
   const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
 
-  navigator.mediaDevices.getUserMedia({ audio: true })
+  navigator.mediaDevices.getUserMedia({ audio: true})
     .then(function (stream) {
-      mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/wav' });
+      mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.ondataavailable = function (event) {
         chunks.push(event.data);
       };
