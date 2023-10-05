@@ -38,8 +38,7 @@ const closePopupButton = document.getElementById('close-popup-button');
 const userList = document.getElementById('user-list');
 const searchUserInput = document.getElementById('search-user');
 const messageInputSearch = document.getElementById('message-input');
-const iframeElement = document.createElement('iframe');
-iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
+
 
 let iframes = [];
 let roomByName;
@@ -53,53 +52,7 @@ const objEquipe = {
 
 }
 
-function openIframe(index, user, iframeElement) {
-
-    iframes.forEach((iframe, i) => {
-        if (i === index) {
-            iframe.classList.add('show', 'active');
-        } else {
-            iframe.classList.remove('show', 'active');
-        }
-    });
-
-    if (user === "Equipe") {
-        roomByName = contractFromURL;
-    } else {
-        roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`)?.id || contractFromURL;
-    }
-
-
-    iframeElement.classList.add('your-iframe-class');
-    iframeElement.style.width = '100%';
-    iframeElement.style.height = '700px';
-    iframeElement.sandbox.add('allow-same-origin');
-    iframeElement.sandbox.add('allow-scripts');
-    iframeElement.sandbox.add('allow-popups');
-    iframeElement.sandbox.add('allow-forms');
-    iframeElement.sandbox.add('allow-modals');
-    iframeElement.sandbox.add('allow-orientation-lock');
-    iframeElement.sandbox.add('allow-microphone');
-
-
-
-    const iframeContainer = document.getElementById('iframe');
-    iframeContainer.innerHTML = '';
-
-    iframeContainer.appendChild(iframeElement);
-
-    localStorage.setItem('info-client-chat', JSON.stringify({ name: nameFromURL, room: roomByName }))
-
-
-    iframeElement.addEventListener('load', () => {
-        iframeElement.contentWindow.postMessage({ name: nameFromURL, room: roomByName });
-    });
-}
-
-
 socket.on('getRoomData', (data) => {
-
-    console.log('getRoomData', data)
     roomListNames = data.users;
 
 
@@ -111,9 +64,55 @@ socket.on('getRoomData', (data) => {
     const idx = localStorage.getItem('last-room-index') || 0
     const team = localStorage.getItem('last-room-userName') || 'Equipe';
 
+    setTimeout(() => {
+        openIframe(idx, team);
 
-    openIframe(idx, team, iframeElement);
+    }, 1000)
 
+    function openIframe(index, user) {
+      
+        iframes.forEach((iframe, i) => {
+            if (i === index) {
+                iframe.classList.add('show', 'active');
+            } else {
+                iframe.classList.remove('show', 'active');
+            }
+        });
+
+        if (user === "Equipe") {
+            roomByName = contractFromURL;
+        } else {
+            roomByName = combinations.find((x) => x.combination === `${user}_${nameFromURL}`)?.id || contractFromURL;
+        }
+
+        const iframeElement = document.createElement('iframe');
+        iframeElement.src = `https://wilkor.github.io/chat-parse-blip/chat.html?`;
+        //iframeElement.src = `/chat.html?`;
+        iframeElement.classList.add('your-iframe-class');
+        iframeElement.style.width = '100%';
+        iframeElement.style.height = '700px';
+        iframeElement.sandbox.add('allow-same-origin');
+        iframeElement.sandbox.add('allow-scripts');
+        iframeElement.sandbox.add('allow-popups');
+        iframeElement.sandbox.add('allow-forms');
+        iframeElement.sandbox.add('allow-modals');
+        iframeElement.sandbox.add('allow-orientation-lock');
+        iframeElement.sandbox.add('allow-microphone');
+
+
+
+        const iframeContainer = document.getElementById('iframe');
+        iframeContainer.innerHTML = '';
+
+        iframeContainer.appendChild(iframeElement);
+
+        localStorage.setItem('info-client-chat', JSON.stringify({ name: nameFromURL, room: roomByName }))
+
+
+        iframeElement.addEventListener('load', () => {
+            iframeElement.contentWindow.postMessage({ name: nameFromURL, room: roomByName });
+        });
+    }
 
 
 
