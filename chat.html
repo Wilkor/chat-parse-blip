@@ -28,27 +28,34 @@
   <meta name="theme-color" content="#ffc000">
 
 
-  <meta name="apple-mobile-web-app-capable" content="yes"> 
+  <meta name="apple-mobile-web-app-capable" content="yes">
 
-  <link rel="apple-touch-startup-image" href="splash_640x1136.png" media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_750x1334.png" media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_1125x2436.png" media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_1125x2436.png" media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_1536x2048.png" media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_1668x2224.png" media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_2048x2732.png" media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="splash_640x1136.png"
+    media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="splash_750x1334.png"
+    media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="splash_1125x2436.png"
+    media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="splash_1125x2436.png"
+    media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="splash_1536x2048.png"
+    media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="splash_1668x2224.png"
+    media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
+  <link rel="apple-touch-startup-image" href="splash_2048x2732.png"
+    media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
 
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-<link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="icon" href="https://pontoparse.net/wp-content/uploads/2022/01/icone_do_site.jpg" sizes="32x32" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="https://pontoparse.net/wp-content/uploads/2022/01/icone_do_site.jpg" sizes="32x32" />
 
 
-<link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
+  <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
 
-<link rel="manifest" href="/manifest.json" />
-<meta name="viewport" content= "width=device-width, user-scalable=no">
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="viewport" content="width=device-width, user-scalable=no">
 
   <style>
     .popup-container {
@@ -111,7 +118,7 @@
       <div id="typing-indicator" class="user-name"></div>
       <form class="input-container" id="chat-form">
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
-      
+
         <button class="btn btn-primary btn-sm" id="submit-button" type="submit">
           Enviar
         </button>
@@ -193,13 +200,25 @@
 
 
     document.addEventListener("DOMContentLoaded", function () {
-    
+
       setTimeout(function () {
         document.querySelector('.splash-screen').style.display = 'none';
       }, 4000);
+
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(function (registration) {
+            console.log('Service Worker registrado com sucesso:', registration);
+          })
+          .catch(function (error) {
+            console.log('Falha ao registrar o Service Worker:', error);
+          });
+      }
+
+
     });
 
-    function refreshPage () {
+    function refreshPage() {
       window.location.reload();
     }
   </script>

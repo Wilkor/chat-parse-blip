@@ -177,3 +177,10 @@ const userTypingSocket = (nameFromURL, bool) => {
 
     socket.emit('user typing', nameFromURL, bool);
 }
+
+
+
+socket.on('disconnect', async () => {
+
+     window.location.reload();
+  });
