@@ -2,7 +2,7 @@
 <html>
 
 <head>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connect Team</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
   <link rel="stylesheet" type="text/css" href="estilo-chat.css">
@@ -77,13 +77,7 @@
       <div id="typing-indicator" class="user-name"></div>
       <form class="input-container" id="chat-form">
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
-        <label for="image-input" class="custom-file-upload">
-          📸
-        </label>
-        <input type="file" id="image-input" accept="image/*">
-        <button class="btn btn-secondary btn-sm" id="emoji-button" type="button" onclick="toggleWebpagePopup()">
-          😃
-        </button>
+      
         <button class="btn btn-primary btn-sm" id="submit-button" type="submit">
           Enviar
         </button>
@@ -91,6 +85,15 @@
       <br>
       <!-- <button id="recordBtn" class="btn btn-primary btn-sm" >Iniciar Gravação de Voz</button> -->
       <button class="btn btn-primary btn-sm" id="user-list-button" onclick="toggleUserListPopup()">Mencionar @</button>
+
+      <label for="image-input" class="custom-file-upload" title="Anexar imagens">
+        📸
+      </label>
+      <input type="file" id="image-input" accept="image/*">
+      <button class="btn btn-secondary btn-sm" id="emoji-button" type="button" onclick="toggleWebpagePopup()">
+        😃
+      </button>
+
       <!-- <button class="btn btn-primary btn-sm" id="user-list-button"
         onclick="toggleUserListPostMessage()">Usuários</button> -->
     </div>
