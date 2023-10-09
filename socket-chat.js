@@ -29,6 +29,15 @@ socket.on('roomData', (data) => {
     console.log(roomListNames)
 });
 
+setInterval(() => {
+    console.log('Enviando ping para o servidor');
+    socket.emit('ping'); 
+}, 2000);
+
+
+socket.on('pong', () => {
+    console.log('Recebido pong do servidor');
+});
 
 // window.addEventListener('message', (event) => {
 
