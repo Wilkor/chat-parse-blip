@@ -3,7 +3,6 @@ self.addEventListener('install', (event) => {
       caches.open('my-cache').then((cache) => {
         return cache.addAll([
           '/',
-          '/chat.html',
           '/estilo-chat.css',
           '/socket-chat.js',
           '/function-chat.js',
