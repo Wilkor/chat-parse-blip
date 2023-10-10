@@ -1,12 +1,12 @@
 const messagesElement = document.getElementById('messages');
 
 const messageInput = document.getElementById('message-input');
-document.getElementById('chat').style.display = 'none';
+
+
 
 const urlSearchParams = new URLSearchParams(window.location.search);
-const roomFromURL = urlSearchParams.get('room').toLowerCase();
-const nameFromURL = urlSearchParams.get('name').toLowerCase();
-
+const roomFromURL = urlSearchParams.get('room').toLowerCase()
+const nameFromURL = urlSearchParams.get('name').toLowerCase()
 
 openChat(roomFromURL, nameFromURL, getRandomColor());
 
@@ -31,11 +31,23 @@ messageInput.addEventListener('input', () => {
 });
 
 
+const sendTyping = () => {
+  if (!isTyping) {
+    isTyping = true;
+    userTypingSocket(nameFromURL, true);
+  }
 
+  clearTimeout(typingTimeout);
+  typingTimeout = setTimeout(() => {
+    isTyping = false;
+    userTypingSocket(nameFromURL, false);
+  }, typingIndicatorTimeout);
+
+}
 const sendMessageInput = (messages) => {
 
-    messageInput.value = messages;
-    document.getElementById('submit-button').click();
+  messageInput.value = messages;
+  document.getElementById('submit-button').click();
 }
 
 
@@ -77,7 +89,8 @@ function openChat(room, name, color) {
 
   addSystemMessage(`${name} entrou na sala.`);
 
-  document.querySelector('.form-container').style.display = 'none';
+
+  //document.querySelector('.form-container').style.display = 'none';
   document.getElementById('chat').style.display = 'block';
   document.getElementById('current-room').textContent = room;
 }
@@ -259,7 +272,6 @@ const imageButton = document.getElementById('image-button');
 const chatForm = document.getElementById('chat-form');
 
 
-// Evento acionado quando uma imagem é selecionada
 imageInput.addEventListener('change', (event) => {
   event.preventDefault();
 
@@ -277,7 +289,7 @@ imageInput.addEventListener('change', (event) => {
   const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
 
   const file = event.target.files[0];
-  
+
   // Verifica se um arquivo foi selecionado e se é uma imagem válida
   if (file && allowedImageTypes.includes(file.type)) {
     const reader = new FileReader();
@@ -333,7 +345,7 @@ function startRecording() {
   };
   const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
 
-  navigator.mediaDevices.getUserMedia({ audio: true})
+  navigator.mediaDevices.getUserMedia({ audio: true })
     .then(function (stream) {
       mediaRecorder = new MediaRecorder(stream);
       mediaRecorder.ondataavailable = function (event) {

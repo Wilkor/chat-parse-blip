@@ -85,53 +85,6 @@
       margin-left: -2px;
       margin-top: -30px;
     }
-
-    .form-container {
-    width: 300px;
-    margin: 0 auto;
-    text-align: center;
-}
-
-.logo-container {
-    margin-bottom: 20px;
-}
-
-.logo {
-    width: 100px;
-    height: 100px;
-}
-
-.input-container {
-    margin-bottom: 20px;
-}
-
-.input-field {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
-}
-
-.input-button {
-    width: 100%;
-    padding: 10px;
-    font-size: 18px;
-    background-color: #ffc100;
-    color: black;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    box-sizing: border-box;
-}
-
-.input-button:hover {
-    background-color: #ffc101;
-}
-
   </style>
 </head>
 
@@ -144,19 +97,11 @@
 
 
   <div class="chat-container" id="chat-container">
-
-    <div class="form-container">
-      <div class="logo-container">
-          <img src="android-chrome-192x192.png" alt="Logo da Empresa" class="logo">
-      </div>
-      <div class="input-containe">
-          <input class="input-field" type="text" id="name" placeholder="Seu nome" /><br>
-          <input class="input-field" type="text" id="room" placeholder="Nome da empresa" /><br>
-          <button class="input-button" id="join-button">Entrar na Sala</button>
-      </div>
-  </div>
-  
-  
+    <div class="input-container">
+      <!-- <input class="input-field" type="text" id="room" placeholder="Sala" />
+      <input class="input-field" type="text" id="name" placeholder="Nome de Usuário" /> -->
+      <!-- <button class="input-button" id="join-button">Entrar na Sala</button> -->
+    </div>
 
     <div id="chat">
       <div style="display:none;">
@@ -190,12 +135,12 @@
 
       </div>
 
-
-      <iframe id="webpage-iframe1" src="https://wilkor.github.io/plugin-input-chat-parse/" width="100%" height="98px"
-        style="background-color: transparent"></iframe>
-
-      <!-- <iframe id="webpage-iframe1" src="http://localhost:3000/" width="100%" height="98px"
+      <!-- 
+      <iframe id="webpage-iframe1" src="https://wilkor.github.io/plugin-input-chat-parse/" width="100%" height="105px"
         style="background-color: transparent"></iframe> -->
+
+      <iframe id="webpage-iframe1" src="http://localhost:3000/" width="100%" height="98px"
+        style="background-color: transparent"></iframe>
 
 
 
@@ -217,6 +162,10 @@
 
     <button class="btn btn-primary btn-sm" id="close-popup-button" onclick="toggleUserListPopup()">Fechar</button>
   </div>
+
+
+  <script src="/socket-chat.js"></script>
+  <script src="/functions-chat.js"></script>
 
   <script>
     function toggleUserListPopup() {
@@ -253,8 +202,16 @@
       const messageInput = document.getElementById('message-input');
 
       if (event.data.ref === 'front-input') {
+
         sendMessageInput(event.data.message)
       }
+
+
+      if (event.data.ref === 'front-input-typing') {
+
+        sendTyping()
+      }
+
 
       if (event.data.ref === 'front-image') {
 
@@ -277,7 +234,7 @@
 
       if (event.data.ref === 'front-mention') {
 
-        toggleUserListPopup()
+        document.getElementById('recordBtn').click()
 
       }
 
@@ -288,35 +245,9 @@
 
     });
 
-
-    function getRandomColor() {
-      const colors = ['#9a53ff', "#d50000", "#4dcb7b"];
-      return colors[Math.floor(Math.random() * colors.length)];
-    }
-
-
-    document.getElementById('join-button').addEventListener('click', () => {
-
-      const room = document.getElementById('room').value;
-      const name = document.getElementById('name').value;
-
-      if (room.trim() !== '' && name.trim() !== '') {
-        const queryParams = `?name=${encodeURIComponent(name)}&room=${encodeURIComponent(room)}`;
-        const novaURL = window.location.href + queryParams;
-        window.location.href = novaURL;
-
-        openChat(room, name, getRandomColor());
-      }
-    });
-
-
   </script>
 
 
-
-
-  <script src="socket-chat.js"></script>
-  <script src="functions-chat.js"></script>
 </body>
 
 </html>
