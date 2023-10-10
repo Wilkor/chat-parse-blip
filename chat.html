@@ -85,6 +85,53 @@
       margin-left: -2px;
       margin-top: -30px;
     }
+
+    .form-container {
+    width: 300px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.logo-container {
+    margin-bottom: 20px;
+}
+
+.logo {
+    width: 100px;
+    height: 100px;
+}
+
+.input-container {
+    margin-bottom: 20px;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.input-button {
+    width: 100%;
+    padding: 10px;
+    font-size: 18px;
+    background-color: #ffc100;
+    color: black;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    box-sizing: border-box;
+}
+
+.input-button:hover {
+    background-color: #ffc101;
+}
+
   </style>
 </head>
 
@@ -97,11 +144,19 @@
 
 
   <div class="chat-container" id="chat-container">
-    <div class="input-container">
-      <input class="input-field" type="text" id="name" placeholder="Seu nome" /><br>
-      <input class="input-field" type="text" id="room" placeholder="Nome da empresa" /><br>
-      <button class="input-button" id="join-button">Entrar na Sala</button>
-    </div>
+
+    <div class="form-container">
+      <div class="logo-container">
+          <img src="android-chrome-192x192.png" alt="Logo da Empresa" class="logo">
+      </div>
+      <div class="input-containe">
+          <input class="input-field" type="text" id="name" placeholder="Seu nome" /><br>
+          <input class="input-field" type="text" id="room" placeholder="Nome da empresa" /><br>
+          <button class="input-button" id="join-button">Entrar na Sala</button>
+      </div>
+  </div>
+  
+  
 
     <div id="chat">
       <div style="display:none;">

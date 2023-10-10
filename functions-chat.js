@@ -77,7 +77,7 @@ function openChat(room, name, color) {
 
   addSystemMessage(`${name} entrou na sala.`);
 
-  document.querySelector('.input-container').style.display = 'none';
+  document.querySelector('.form-container').style.display = 'none';
   document.getElementById('chat').style.display = 'block';
   document.getElementById('current-room').textContent = room;
 }
