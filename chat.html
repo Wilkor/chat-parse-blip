@@ -117,23 +117,33 @@
 
       <div id="typing-indicator" class="user-name"></div>
       <form class="input-container" id="chat-form">
+
+      </form>
+      <br>
+      <div style="display:none;">
+
         <input class="input-field" id="message-input" type="text" placeholder="Digite sua mensagem" />
 
         <button class="btn btn-primary btn-sm" id="submit-button" type="submit">
           Enviar
         </button>
-      </form>
-      <br>
-      <!-- <button id="recordBtn" class="btn btn-primary btn-sm" >Iniciar Gravação de Voz</button> -->
-      <button class="btn btn-primary btn-sm" id="user-list-button" onclick="toggleUserListPopup()">Mencionar @</button>
+        <input type="file" id="image-input" accept="image/*">
+        <label for="image-input" class="custom-file-upload" title="Anexar imagens">
+          📸
+        </label>
+        <button class="btn btn-secondary btn-sm" id="emoji-button" type="button" onclick="toggleWebpagePopup()">
+          😃
+        </button>
+        <button class="btn btn-primary btn-sm" id="user-list-button" onclick="toggleUserListPopup()">Mencionar
+          @</button>
 
-      <label for="image-input" class="custom-file-upload" title="Anexar imagens">
-        📸
-      </label>
-      <input type="file" id="image-input" accept="image/*">
-      <button class="btn btn-secondary btn-sm" id="emoji-button" type="button" onclick="toggleWebpagePopup()">
-        😃
-      </button>
+      </div>
+      <!--       
+     <button id="recordBtn" class="btn btn-primary btn-sm" >Iniciar Gravação de Voz</button> -->
+
+
+      <iframe id="webpage-iframe1" src="https://wilkor.github.io/plugin-input-chat-parse/" width="100%" height="105px"
+        style="background-color: transparent; position: absolute;"></iframe>
 
 
       <!-- <button class="btn btn-primary btn-sm" id="user-list-button"
@@ -175,6 +185,7 @@
       if (webpagePopup.style.display === 'block') {
 
         const url = 'https://wilkor.github.io/plugin-emoji-chat-parse/';
+        //const url = 'http://localhost:3001/';
         iframe.src = url;
       } else {
 
@@ -188,37 +199,29 @@
       const emoji = event.data.Emoji;
       const messageInput = document.getElementById('message-input');
 
-      if (messageInput.value) {
-
-        messageInput.value += ` ${String.fromCodePoint(parseInt(emoji, 16))}`;
-      } else {
-
-        messageInput.value = String.fromCodePoint(parseInt(emoji, 16));
-      }
-      toggleWebpagePopup()
-    });
-
-
-    document.addEventListener("DOMContentLoaded", function () {
-
-      setTimeout(function () {
-        document.querySelector('.splash-screen').style.display = 'none';
-      }, 4000);
-
-      if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('/service-worker.js')
-          .then(function (registration) {
-            console.log('Service Worker registrado com sucesso:', registration);
-          })
-          .catch(function (error) {
-            console.log('Falha ao registrar o Service Worker:', error);
-          });
+      if (event.data.ref === 'front-input') {
+        sendMessageInput(event.data.message)
       }
 
+      if (event.data.ref === 'front-image') {
+
+        document.getElementById('image-input').click();
+      }
+
+
+      if (event.data.ref === 'front-emoji') {
+
+        toggleWebpagePopup()
+
+      }
+
+      let  iframe = document.getElementById('webpage-iframe1').contentWindow;
+      iframe.postMessage({ emoji }, '*');
 
     });
 
   </script>
+
 
 
 

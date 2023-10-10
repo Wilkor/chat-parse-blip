@@ -38,6 +38,14 @@ messageInput.addEventListener('input', () => {
 });
 
 
+
+const sendMessageInput = (messages) => {
+
+    messageInput.value = messages;
+    document.getElementById('submit-button').click();
+}
+
+
 document.getElementById('submit-button').addEventListener('click', (event) => {
   event.preventDefault();
 
@@ -83,7 +91,6 @@ function openChat(room, name, color) {
 
 function addMessageToChat(user, text, timestamp, bubbleColor, image, audio) {
 
-  console.log(text)
 
   const messageContainer = document.createElement('div');
   messageContainer.classList.add('message-container');
