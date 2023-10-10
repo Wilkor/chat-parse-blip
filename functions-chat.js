@@ -363,7 +363,7 @@ function startRecording() {
       mediaRecorder.start();
     })
     .catch(function (err) {
-      console.log(err)
+      alert("Não foi possivel acessar o microfone!")
       return
     });
 }
