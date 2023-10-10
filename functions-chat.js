@@ -1,6 +1,7 @@
 const messagesElement = document.getElementById('messages');
 
 const messageInput = document.getElementById('message-input');
+document.getElementById('chat').style.display = 'none';
 
 const urlSearchParams = new URLSearchParams(window.location.search);
 const roomFromURL = urlSearchParams.get('room').toLowerCase();
@@ -8,14 +9,6 @@ const nameFromURL = urlSearchParams.get('name').toLowerCase();
 
 
 openChat(roomFromURL, nameFromURL, getRandomColor());
-// window.addEventListener('message', (event) => {
-
-//   roomFromURL = event.data.room;
-//   nameFromURL = event.data.name;
-
-//   openChat(event.data.room, event.data.name, getRandomColor());
-
-// });
 
 const typingIndicatorTimeout = 1000;
 
@@ -74,6 +67,8 @@ document.getElementById('submit-button').addEventListener('click', (event) => {
     messageInput.value = '';
   }
 });
+
+
 
 
 function openChat(room, name, color) {

@@ -98,9 +98,9 @@
 
   <div class="chat-container" id="chat-container">
     <div class="input-container">
-      <!-- <input class="input-field" type="text" id="room" placeholder="Sala" />
-      <input class="input-field" type="text" id="name" placeholder="Nome de Usuário" /> -->
-      <!-- <button class="input-button" id="join-button">Entrar na Sala</button> -->
+      <input class="input-field" type="text" id="name" placeholder="Seu nome" /><br>
+      <input class="input-field" type="text" id="room" placeholder="Nome da empresa" /><br>
+      <button class="input-button" id="join-button">Entrar na Sala</button>
     </div>
 
     <div id="chat">
@@ -135,7 +135,7 @@
 
       </div>
 
-      
+
       <iframe id="webpage-iframe1" src="https://wilkor.github.io/plugin-input-chat-parse/" width="100%" height="98px"
         style="background-color: transparent"></iframe>
 
@@ -232,6 +232,28 @@
       iframe.postMessage({ emoji }, '*');
 
     });
+
+
+    function getRandomColor() {
+      const colors = ['#9a53ff', "#d50000", "#4dcb7b"];
+      return colors[Math.floor(Math.random() * colors.length)];
+    }
+
+
+    document.getElementById('join-button').addEventListener('click', () => {
+
+      const room = document.getElementById('room').value;
+      const name = document.getElementById('name').value;
+
+      if (room.trim() !== '' && name.trim() !== '') {
+        const queryParams = `?name=${encodeURIComponent(name)}&room=${encodeURIComponent(room)}`;
+        const novaURL = window.location.href + queryParams;
+        window.location.href = novaURL;
+
+        openChat(room, name, getRandomColor());
+      }
+    });
+
 
   </script>
 
