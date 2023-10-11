@@ -383,9 +383,12 @@ function startRecording() {
 }
 
 function stopRecording() {
-  if (mediaRecorder.state === 'recording') {
+  if (mediaRecorder?.state === 'recording') {
     window.postMessage({ message: 'stop', ref: 'front-audio-stop' }, '*');
     mediaRecorder.stop();
+  } else {
+    const data = { audio: false, ref: 'front-audio' };
+    window.parent.postMessage(data, '*');
   }
 }
 
