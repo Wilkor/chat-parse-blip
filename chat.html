@@ -197,9 +197,6 @@
 
     window.addEventListener('message', (event) => {
 
-
-      console.log(event.data)
-
       event.preventDefault();
       const emoji = event.data.Emoji;
       const messageInput = document.getElementById('message-input');
@@ -244,6 +241,39 @@
 
       }
 
+      if (event.data.ref === 'front-audio-back-stop') {
+
+        console.log('front-audio-back-stop')
+
+      }
+
+      if (event.data.ref === 'front-audio-send-socket') {
+
+      
+        let message = event.data.message
+        iframe.postMessage({ message, ref: 'front-audio-stop' }, '*');
+
+        const timestampOptions = {
+          hour: 'numeric',
+          minute: 'numeric',
+          second: 'numeric',
+          day: 'numeric',
+          month: 'numeric',
+          year: 'numeric',
+          timeZone: 'America/Sao_Paulo'
+        };
+
+        const timestamp = new Date().toLocaleString('pt-BR', timestampOptions);
+
+        const messages = {
+          message: event.data.blob,
+          timestamp,
+          bubbleColor: getRandomColor(),
+          image: false,
+          audio: true
+        }
+        sendMessageSocket(messages);
+      }
 
       iframe.postMessage({ emoji }, '*');
 

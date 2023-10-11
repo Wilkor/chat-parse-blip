@@ -375,7 +375,7 @@ function startRecording() {
       mediaRecorder.start();
     })
     .catch(function (err) {
-      const data = { audio: true, ref: 'front-audio' };
+      const data = { audio: true, ref: 'front-audio-start' };
       window.parent.postMessage(data, '*');
 
       return
@@ -387,7 +387,7 @@ function stopRecording() {
     window.postMessage({ message: 'stop', ref: 'front-audio-stop' }, '*');
     mediaRecorder.stop();
   } else {
-    const data = { audio: false, ref: 'front-audio' };
+    const data = { audio: false, ref: 'front-audio-stop' };
     window.parent.postMessage(data, '*');
   }
 }
