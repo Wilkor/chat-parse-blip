@@ -375,13 +375,16 @@ function startRecording() {
       mediaRecorder.start();
     })
     .catch(function (err) {
-      alert("Não foi possivel acessar o microfone!")
+      const data = { audio: true, ref: 'front-audio' };
+      window.parent.postMessage(data, '*');
+
       return
     });
 }
 
 function stopRecording() {
   if (mediaRecorder.state === 'recording') {
+    window.postMessage({ message: 'stop', ref: 'front-audio-stop' }, '*');
     mediaRecorder.stop();
   }
 }
