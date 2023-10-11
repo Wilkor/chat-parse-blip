@@ -213,8 +213,7 @@ const messageInputSearch = document.getElementById('message-input'); // Campo de
 
 // Função para abrir o popup da lista de usuários
 const openUserListPopup = () => {
-  // Preencha a lista de usuários com os nomes dos usuários da sala
-  console.log(roomListNames);
+
   userList.innerHTML = roomListNames.map((user, index) => {
     if (user.name !== nameFromURL.toLowerCase()) {
 
@@ -256,13 +255,19 @@ searchUserInput.addEventListener('input', () => {
   }).join('');
 });
 
-// Delegação de eventos para tratar cliques nos nomes de usuários
+
 userList.addEventListener('click', (event) => {
+
   const target = event.target;
+
   if (target.classList.contains('user-name')) {
     const userName = target.textContent;
-    messageInputSearch.value = `${messageInputSearch.value.trim()} @${userName}, `;
-    userListPopup.style.display = 'none';
+    const msg = `${messageInputSearch.value.trim()} @${userName}, `;
+
+    window.postMessage({ message: msg, ref: 'front-mention-click' }, '*');
+
+    const userPopup = document.getElementById('user-list-popup');
+    userPopup.style.display = userPopup.style.display === 'block' ? 'none' : 'block';
   }
 });
 

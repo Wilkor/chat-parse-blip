@@ -138,8 +138,8 @@
       
       <iframe id="webpage-iframe1" src="https://wilkor.github.io/plugin-input-chat-parse/" width="100%" height="98px"
         style="background-color: transparent"></iframe>
-<!-- 
-      <iframe id="webpage-iframe1" src="http://localhost:3000/" width="100%" height="98px"
+
+      <!-- <iframe id="webpage-iframe1" src="http://localhost:3000/" width="100%" height="98px"
         style="background-color: transparent"></iframe> -->
 
 
@@ -200,47 +200,40 @@
       event.preventDefault();
       const emoji = event.data.Emoji;
       const messageInput = document.getElementById('message-input');
+      let iframe = document.getElementById('webpage-iframe1').contentWindow;
 
       if (event.data.ref === 'front-input') {
-
         sendMessageInput(event.data.message)
       }
 
-
       if (event.data.ref === 'front-input-typing') {
-
         sendTyping()
       }
 
-
       if (event.data.ref === 'front-image') {
-
         document.getElementById('image-input').click();
       }
 
-
       if (event.data.ref === 'front-emoji') {
-
         toggleWebpagePopup()
-
       }
 
       if (event.data.ref === 'front-audio') {
-
         document.getElementById('recordBtn').click()
-
       }
 
 
       if (event.data.ref === 'front-mention') {
+        openUserListPopup()
+      }
 
-        toggleUserListPopup()
+      if(event.data.ref === 'front-mention-click') {
+
+        let message = event.data.message
+        iframe.postMessage({ message, ref: 'front-mention-click'}, '*');
 
       }
 
-
-
-      let iframe = document.getElementById('webpage-iframe1').contentWindow;
       iframe.postMessage({ emoji }, '*');
 
     });

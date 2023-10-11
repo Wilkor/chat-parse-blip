@@ -26,7 +26,7 @@ socket.on('roomData', (data) => {
 
 socket.on('roomData', (data) => {
     roomListNames = data.users;
-    console.log(roomListNames)
+    
 });
 
 setInterval(() => {
@@ -38,16 +38,6 @@ setInterval(() => {
 socket.on('pong', () => {
     console.log('Recebido pong do servidor');
 });
-
-// window.addEventListener('message', (event) => {
-
-//     roomFromURL = event.data.room;
-//     nameFromURL = event.data.name;
-
-
-
-//   });
-
 
 socket.on('user typing', ({ username, isTyping }) => {
     const typingIndicator = document.getElementById('typing-indicator');
