@@ -30,8 +30,12 @@
             mediaRecorder.onstop = function () {
                 const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
                 const audioUrl = URL.createObjectURL(audioBlob);
-                const audio = new Audio(audioUrl);
                 playRecordingButton.disabled = false;
+
+                playRecordingButton.addEventListener('click', function () {
+                    const audio = new Audio(audioUrl);
+                    audio.play();
+                });
             };
         })
         .catch(function (err) {
@@ -48,13 +52,6 @@
         mediaRecorder.stop();
         startRecordingButton.disabled = false;
         stopRecordingButton.disabled = true;
-    });
-
-    playRecordingButton.addEventListener('click', function () {
-        const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(audioBlob);
-        const audio = new Audio(audioUrl);
-        audio.play();
     });
 </script>
 
