@@ -113,7 +113,7 @@ function addMessageToChat(user, text, timestamp, bubbleColor, image, audio) {
     imageElement.classList.add('message');
     messageContainer.appendChild(imageElement);
   } else if (audio) {
-    console.log("audio-cache", text)
+ 
     const base64String = text
     const messageContainerAudio = document.createElement('div');
     const audioElement = document.createElement('audio');
@@ -356,7 +356,7 @@ recordBtn.addEventListener('click', () => {
       };
 
       mediaRecorder.onstop =  async () => {
-        const audioBlob = new Blob(chunks, { type: 'audio/wav' });
+        const audioBlob = new Blob(chunks, { type: 'aaudio/ogg' });
         chunks = [];
 
         const message = {
