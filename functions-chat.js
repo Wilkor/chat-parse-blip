@@ -113,15 +113,13 @@ function addMessageToChat(user, text, timestamp, bubbleColor, image, audio) {
     imageElement.classList.add('message');
     messageContainer.appendChild(imageElement);
   } else if (audio) {
-
-    const blob = new Blob([audio], { type: 'audio/wav' });
-    const audioUrl = URL.createObjectURL(blob);
-
+    console.log("audio-cache", text)
+    const base64String = text
     const messageContainerAudio = document.createElement('div');
     const audioElement = document.createElement('audio');
     audioElement.controls = true;
-    audioElement.src = audioUrl;
-    messageContainerAudio.classList.add('message');
+    audioElement.src = "data:audio/wav;base64," + base64String;
+    messageContainerAudio.classList.add('audio');
     messageContainerAudio.appendChild(audioElement);
     messageContainer.appendChild(messageContainerAudio);
 
@@ -337,7 +335,7 @@ recordBtn.addEventListener('click', () => {
   }
 });
 
-function startRecording() {
+ function startRecording() {
 
   const timestampOptions = {
     hour: 'numeric',
@@ -357,18 +355,19 @@ function startRecording() {
         chunks.push(event.data);
       };
 
-      mediaRecorder.onstop = function () {
+      mediaRecorder.onstop =  async () => {
         const audioBlob = new Blob(chunks, { type: 'audio/wav' });
         chunks = [];
 
         const message = {
-          message: audioBlob,
+          message: await blobToBase64(audioBlob),
           timestamp,
           bubbleColor: getRandomColor(),
           image: false,
           audio: true
         }
-        sendMessageSocket(message);
+       
+       sendMessageSocket(message);
 
       };
 
@@ -383,8 +382,9 @@ function startRecording() {
 }
 
 function stopRecording() {
+   console.log('parou ')
   if (mediaRecorder?.state === 'recording') {
-    window.postMessage({ message: 'stop', ref: 'front-audio-stop' }, '*');
+    window.parent.postMessage({ message: 'stop', ref: 'front-audio-stop' }, '*');
     mediaRecorder.stop();
   } else {
     const data = { audio: false, ref: 'front-audio-stop' };
@@ -393,3 +393,19 @@ function stopRecording() {
 }
 
 
+
+
+function blobToBase64(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = function () {
+      const dataUrl = reader.result;
+      const base64 = dataUrl.split(',')[1];
+      resolve(base64);
+    };
+    reader.onerror = function (error) {
+      reject(error);
+    };
+    reader.readAsDataURL(blob);
+  });
+}

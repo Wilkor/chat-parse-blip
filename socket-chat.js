@@ -26,12 +26,12 @@ socket.on('roomData', (data) => {
 
 socket.on('roomData', (data) => {
     roomListNames = data.users;
-    
+
 });
 
 setInterval(() => {
     console.log('Enviando ping para o servidor');
-    socket.emit('ping'); 
+    socket.emit('ping');
 }, 2000);
 
 
@@ -66,20 +66,30 @@ socket.on('chat message', (msg) => {
 
     if (msg.image) {
         const imageElement = document.createElement('img');
-        imageElement.src = msg.text; // Assume que msg.image contém o base64 da imagem
+        imageElement.src = msg.text;
         imageElement.classList.add('message');
         messageContainer.appendChild(imageElement);
     } else if (msg.audio) {
-        const blob = new Blob([msg.text], { type: 'audio/wav' });
-        const audioUrl = URL.createObjectURL(blob);
 
+        const base64String = msg.text
         const messageContainerAudio = document.createElement('div');
         const audioElement = document.createElement('audio');
         audioElement.controls = true;
-        audioElement.src = audioUrl;
-        messageContainerAudio.classList.add('message');
+        audioElement.src = "data:audio/wav;base64," + base64String;
+        messageContainerAudio.classList.add('audio');
         messageContainerAudio.appendChild(audioElement);
         messageContainer.appendChild(messageContainerAudio);
+
+        // const blob = new Blob([msg.text], { type: 'audio/wav' });
+        // const audioUrl = URL.createObjectURL(blob);
+
+        // const messageContainerAudio = document.createElement('div');
+        // const audioElement = document.createElement('audio');
+        // audioElement.controls = true;
+        // audioElement.src = audioUrl;
+        // messageContainerAudio.classList.add('message');
+        // messageContainerAudio.appendChild(audioElement);
+        // messageContainer.appendChild(messageContainerAudio);
 
     } else {
         const messageElement = document.createElement('div');
@@ -170,5 +180,5 @@ const userTypingSocket = (nameFromURL, bool) => {
 
 socket.on('disconnect', async () => {
 
-     window.location.reload();
-  });
+    window.location.reload();
+});

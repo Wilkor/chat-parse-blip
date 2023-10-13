@@ -195,6 +195,19 @@ body {
     border-radius: 13px 13px 13px 2px;
 }
 
+.audio {
+  border-radius: 15px;
+
+  margin-left: 14px;
+  /* max-width: 70%; */ /* Remova ou comente essa linha */
+  width: fit-content; /* Ajusta a largura ao tamanho do conteúdo */
+  word-wrap: break-word;
+  margin-top: 2px;
+ 
+ 
+}
+
+
 
   .own .message {
     background-color: #454545;
@@ -211,9 +224,28 @@ body {
     font-weight: 400;
     line-height: 20px;
     white-space: pre-line;
-    border: 1px solid var(--color-content-ghost,#8c8c8c);
-    border-radius: 12px 12px 2px 13px;
+
 }
+
+
+.own .audio  {
+ 
+  color: white;
+  text-align: right;
+  /* Alinhar a mensagem do próprio usuário à direita */
+}
+.own .audio {
+  position: relative;
+  margin-bottom: 5px;
+  width: auto;
+  height: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: pre-line;
+  border-radius: 12px 12px 2px 13px;
+}
+
 
 
 
