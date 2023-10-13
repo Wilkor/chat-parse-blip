@@ -67,7 +67,7 @@ socket.on('chat message', (msg) => {
     if (msg.image) {
         const imageElement = document.createElement('img');
         imageElement.src = msg.text;
-        imageElement.classList.add('imagem');
+        imageElement.classList.add('message');
         messageContainer.appendChild(imageElement);
     } else if (msg.audio) {
 
@@ -80,16 +80,7 @@ socket.on('chat message', (msg) => {
         messageContainerAudio.appendChild(audioElement);
         messageContainer.appendChild(messageContainerAudio);
 
-        // const blob = new Blob([msg.text], { type: 'audio/wav' });
-        // const audioUrl = URL.createObjectURL(blob);
-
-        // const messageContainerAudio = document.createElement('div');
-        // const audioElement = document.createElement('audio');
-        // audioElement.controls = true;
-        // audioElement.src = audioUrl;
-        // messageContainerAudio.classList.add('message');
-        // messageContainerAudio.appendChild(audioElement);
-        // messageContainer.appendChild(messageContainerAudio);
+    
 
     } else {
         const messageElement = document.createElement('div');
