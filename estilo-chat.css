@@ -194,8 +194,12 @@ body {
     border: 1px solid var(--color-content-ghost,#8c8c8c);
     border-radius: 13px 13px 13px 2px;
     max-width: 100%; /* Define a largura máxima como 100% do contêiner pai */
-    max-height: 100vh;
+    max-height: 50vh; 
+ 
+   
 }
+
+
 
 .audio {
   border-radius: 15px;
@@ -247,6 +251,8 @@ body {
   white-space: pre-line;
   border-radius: 12px 12px 2px 13px;
 }
+
+
 
 
 

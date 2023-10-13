@@ -67,7 +67,7 @@ socket.on('chat message', (msg) => {
     if (msg.image) {
         const imageElement = document.createElement('img');
         imageElement.src = msg.text;
-        imageElement.classList.add('message');
+        imageElement.classList.add('imagem');
         messageContainer.appendChild(imageElement);
     } else if (msg.audio) {
 
