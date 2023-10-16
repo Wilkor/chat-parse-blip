@@ -29,7 +29,7 @@
 
 
   <meta name="apple-mobile-web-app-capable" content="yes">
-
+<!-- 
   <link rel="apple-touch-startup-image" href="splash_640x1136.png"
     media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
   <link rel="apple-touch-startup-image" href="splash_750x1334.png"
@@ -44,7 +44,7 @@
     media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
   <link rel="apple-touch-startup-image" href="splash_2048x2732.png"
     media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
-
+ -->
 
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
@@ -85,22 +85,46 @@
       margin-left: -2px;
       margin-top: -30px;
     }
+    .splash-screen {
+    display: flex;
+    flex-direction: column; /* Adicionando flex direction para alinhar os elementos na coluna verticalmente */
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Definindo a altura da tela de splash como 100% da altura da viewport */
+    background-color: white; /* Cor de fundo da tela de splash */
+  }
+
+  .splash-screen img {
+    width: 5%; /* Largura da imagem de splash (1% do tamanho da div pai) */
+    margin-bottom: 20px; /* Espaçamento inferior da imagem em relação ao texto */
+  }
+
+  .splash-screen p {
+    font-size: 24px;
+    color: black;
+  }
+
+  /* Adicionando a classe 'hidden' para ocultar a tela de splash */
+  .hidden {
+    display: none;
+  }
+
   </style>
+
+
 </head>
 
 <body>
 
-  <!-- <div class="splash-screen">
-    <img src="logo.jpeg" alt="Logo do App">
-    <h1>Connect Team</h1>
-  </div> -->
-
+  <div class="splash-screen" id="splash-screen">
+    <img src="android-chrome-192x192.png" width="1%" alt="Logo da aplicação" />
+    <p>Connect team</p>
+  </div>
+  
 
   <div class="chat-container" id="chat-container">
     <div class="input-container">
-      <!-- <input class="input-field" type="text" id="room" placeholder="Sala" />
-      <input class="input-field" type="text" id="name" placeholder="Nome de Usuário" /> -->
-      <!-- <button class="input-button" id="join-button">Entrar na Sala</button> -->
+
     </div>
 
     <div id="chat">
@@ -135,7 +159,7 @@
 
       </div>
 
-      
+
       <iframe id="webpage-iframe1" src="https://wilkor.github.io/plugin-input-chat-parse/" width="100%" height="98px"
         style="background-color: transparent"></iframe>
 
@@ -143,9 +167,6 @@
         style="background-color: transparent"></iframe> -->
 
 
-
-      <!-- <button class="btn btn-primary btn-sm" id="user-list-button"
-        onclick="toggleUserListPostMessage()">Usuários</button> -->
     </div>
 
   </div>
@@ -235,7 +256,7 @@
 
       if (event.data.ref === 'front-audio-cancel-send') {
 
-        iframe.postMessage({ message:'close', ref: 'front-audio-cancel-send' }, '*');  
+        iframe.postMessage({ message: 'close', ref: 'front-audio-cancel-send' }, '*');
 
       }
 
@@ -259,7 +280,9 @@
 
       }
 
-     
+
+
+
       if (event.data.ref === 'front-audio-send-socket') {
 
         console.log('estou sempre caindo aqui', event.data)
@@ -291,8 +314,8 @@
 
       if (event.data.ref === 'front-audio-back-cancel-send') {
 
-       
-        iframe.postMessage({ message:'close', ref: 'front-audio-cancel-send' }, '*');  
+
+        iframe.postMessage({ message: 'close', ref: 'front-audio-cancel-send' }, '*');
       }
 
       iframe.postMessage({ emoji }, '*');
@@ -301,6 +324,17 @@
 
   </script>
 
+<script>
+  // Aguarde até que a página esteja completamente carregada
+  document.addEventListener("DOMContentLoaded", function() {
+    // Aguarde 1 segundo (1000 milissegundos) antes de ocultar a tela de splash
+    setTimeout(function() {
+      // Oculte a tela de splash
+      var splashScreen = document.getElementById("splash-screen");
+      splashScreen.classList.add("hidden");
+    }, 1000); // 1000 milissegundos = 1 segundo
+  });
+</script>
 
 </body>
 
