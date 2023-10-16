@@ -325,7 +325,7 @@
   </script>
 
 <script>
-   document.getElementById('chat').style.display = 'none'
+   document.getElementById('chat-container').style.display = 'none'
   // Aguarde até que a página esteja completamente carregada
   document.addEventListener("DOMContentLoaded", function() {
     // Aguarde 1 segundo (1000 milissegundos) antes de ocultar a tela de splash
@@ -333,7 +333,7 @@
       // Oculte a tela de splash
       var splashScreen = document.getElementById("splash-screen");
       splashScreen.classList.add("hidden");
-      document.getElementById('chat').style.display = 'block'
+      document.getElementById('chat-container').style.display = 'block'
     }, 5000); // 1000 milissegundos = 1 segundo
   });
 </script>
