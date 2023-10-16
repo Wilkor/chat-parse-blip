@@ -90,7 +90,7 @@
     flex-direction: column; /* Adicionando flex direction para alinhar os elementos na coluna verticalmente */
     justify-content: center;
     align-items: center;
-    height: 80vh; /* Definindo a altura da tela de splash como 100% da altura da viewport */
+    height: 100vh; /* Definindo a altura da tela de splash como 100% da altura da viewport */
     background-color: white; /* Cor de fundo da tela de splash */
   }
 
@@ -325,6 +325,7 @@
   </script>
 
 <script>
+   document.getElementById('chat').style.display = 'none'
   // Aguarde até que a página esteja completamente carregada
   document.addEventListener("DOMContentLoaded", function() {
     // Aguarde 1 segundo (1000 milissegundos) antes de ocultar a tela de splash
@@ -332,6 +333,7 @@
       // Oculte a tela de splash
       var splashScreen = document.getElementById("splash-screen");
       splashScreen.classList.add("hidden");
+      document.getElementById('chat').style.display = 'block'
     }, 5000); // 1000 milissegundos = 1 segundo
   });
 </script>
