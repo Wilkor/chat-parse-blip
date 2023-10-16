@@ -334,6 +334,8 @@
       var splashScreen = document.getElementById("splash-screen");
       splashScreen.classList.add("hidden");
       document.getElementById('chat-container').style.display = 'block'
+      let messagesElement1 = document.getElementById('messages');
+      messagesElement1.scrollTop = messagesElement1.scrollHeight;
     }, 5000); // 1000 milissegundos = 1 segundo
   });
 </script>

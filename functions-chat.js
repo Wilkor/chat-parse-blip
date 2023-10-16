@@ -356,7 +356,7 @@ recordBtn.addEventListener('click', () => {
       };
 
       mediaRecorder.onstop =  async () => {
-        const audioBlob = new Blob(chunks, { type: 'aaudio/ogg' });
+        const audioBlob = new Blob(chunks, { type: 'audio/wav' });
         chunks = [];
 
         const message = {
