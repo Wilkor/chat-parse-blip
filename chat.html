@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Connect Team</title>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.1.1/socket.io.js"></script>
-  <link rel="stylesheet" type="text/css" href="estilo-chat.css">
-  <link rel="stylesheet" type="text/css" href="toast.css">
-  <script src="toastLib.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/estilo-chat.css">
+  <link rel="stylesheet" type="text/css" href="css/toast.css">
+  <link rel="stylesheet" type="text/css" href="css/styles_list.css">
+  <script src="js/toastLib.js"></script>
 
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
@@ -15,13 +16,12 @@
     integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
     crossorigin="anonymous"></script>
 
-
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link rel="manifest" href="/manifest.json">
   <script src="/service-worker.js"></script>
-  <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="img/apple-touch-icon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="img/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="img/favicon-16x16.png">
   <link rel="manifest" href="site.webmanifest">
   <link rel="mask-icon" href="safari-pinned-tab.svg" color="#141414">
   <meta name="msapplication-TileColor" content="#141414">
@@ -29,23 +29,6 @@
 
 
   <meta name="apple-mobile-web-app-capable" content="yes">
-<!-- 
-  <link rel="apple-touch-startup-image" href="splash_640x1136.png"
-    media="(device-width: 320px) and (device-height: 568px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_750x1334.png"
-    media="(device-width: 375px) and (device-height: 667px) and (-webkit-device-pixel-ratio: 2) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_1125x2436.png"
-    media="(device-width: 414px) and (device-height: 736px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_1125x2436.png"
-    media="(device-width: 375px) and (device-height: 812px) and (-webkit-device-pixel-ratio: 3) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_1536x2048.png"
-    media="(min-device-width: 768px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_1668x2224.png"
-    media="(min-device-width: 834px) and (max-device-width: 834px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
-  <link rel="apple-touch-startup-image" href="splash_2048x2732.png"
-    media="(min-device-width: 1024px) and (max-device-width: 1024px) and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait)">
- -->
-
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -57,81 +40,36 @@
   <link rel="manifest" href="/manifest.json" />
   <meta name="viewport" content="width=device-width, user-scalable=no">
 
-  <style>
-    .popup-container {
-      display: none;
-      position: fixed;
-      top: 30%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-
-      padding: 20px;
-      box-shadow: none;
-      z-index: 9999;
-      width: 80%;
-      height: 50%;
-      overflow: hidden;
-
-    }
-
-    .popup-container iframe {
-      width: 100%;
-      height: 100%;
-      border: none;
-    }
-
-    #webpage-iframe1 {
-
-      margin-left: -2px;
-      margin-top: -30px;
-    }
-    .splash-screen {
-    display: flex;
-    flex-direction: column; /* Adicionando flex direction para alinhar os elementos na coluna verticalmente */
-    justify-content: center;
-    align-items: center;
-    height: 100vh; /* Definindo a altura da tela de splash como 100% da altura da viewport */
-    background-color: white; /* Cor de fundo da tela de splash */
-  }
-
-  .splash-screen img {
-    width: 10%; /* Largura da imagem de splash (1% do tamanho da div pai) */
-    margin-bottom: 20px; /* Espaçamento inferior da imagem em relação ao texto */
-  }
-
-  .splash-screen p {
-    font-size: 24px;
-    color: black;
-  }
-
-  /* Adicionando a classe 'hidden' para ocultar a tela de splash */
-  .hidden {
-    display: none;
-  }
-
-  </style>
-
-
 </head>
 
 <body>
 
+
+
   <div class="splash-screen" id="splash-screen">
-    <img src="android-chrome-192x192.png" width="1%" alt="Logo da aplicação" />
+    <img src="img/android-chrome-192x192.png" width="1%" alt="Logo da aplicação" />
     <p>Connect Team</p>
   </div>
-  
+
+
 
   <div class="chat-container" id="chat-container">
     <div class="input-container">
 
     </div>
 
-    <div id="chat">
+   
+
+    <div id="chat" style="display:none;">
       <div style="display:none;">
         <h6>Sala: <span id="current-room"></span></h6>
+        
       </div>
-      <ul id="messages" class="messages"></ul>
+      <div id="current-room">
+        <ul id="messages" class="messages">
+        </ul>
+
+      </div>
 
       <div id="typing-indicator" class="user-name"></div>
       <form class="input-container" id="chat-form">
@@ -159,12 +97,12 @@
 
       </div>
 
-
+<!-- 
       <iframe id="webpage-iframe1" src="https://wilkor.github.io/plugin-input-chat-parse/" width="100%" height="98px"
-        style="background-color: transparent"></iframe>
-
-      <!-- <iframe id="webpage-iframe1" src="http://localhost:3000/" width="100%" height="98px"
         style="background-color: transparent"></iframe> -->
+
+      <iframe id="webpage-iframe1" src="http://localhost:3000/" width="100%" height="98px"
+        style="background-color: transparent"></iframe>
 
 
     </div>
@@ -185,8 +123,8 @@
   </div>
 
 
-  <script src="socket-chat.js"></script>
-  <script src="functions-chat.js"></script>
+  <script src="js/socket-chat.js" defer></script>
+  <script src="js/functions-chat.js" defer></script>
 
   <script>
     function toggleUserListPopup() {
@@ -260,9 +198,12 @@
 
       }
 
-
       if (event.data.ref === 'front-mention') {
-        openUserListPopup()
+
+       localStorage.setItem("change-room", event.data.data);
+
+        openUserListPopup();
+
       }
 
       if (event.data.ref === 'front-mention-click') {
@@ -279,9 +220,6 @@
         iframe.postMessage({ message, ref: 'front-audio-stop' }, '*');
 
       }
-
-
-
 
       if (event.data.ref === 'front-audio-send-socket') {
 
@@ -324,21 +262,23 @@
 
   </script>
 
-<script>
-   document.getElementById('chat-container').style.display = 'none'
-  // Aguarde até que a página esteja completamente carregada
-  document.addEventListener("DOMContentLoaded", function() {
-    // Aguarde 1 segundo (1000 milissegundos) antes de ocultar a tela de splash
-    setTimeout(function() {
-      // Oculte a tela de splash
-      var splashScreen = document.getElementById("splash-screen");
-      splashScreen.classList.add("hidden");
-      document.getElementById('chat-container').style.display = 'block'
-      let messagesElement1 = document.getElementById('messages');
-      messagesElement1.scrollTop = messagesElement1.scrollHeight;
-    }, 5000); // 1000 milissegundos = 1 segundo
-  });
-</script>
+  <script>
+    document.getElementById('chat-container').style.display = 'none'
+
+    document.addEventListener("DOMContentLoaded", function () {
+   
+
+      setTimeout(function () {
+
+        let splashScreen = document.getElementById("splash-screen");
+        splashScreen.classList.add("hidden");
+        document.getElementById('chat-container').style.display = 'block'
+        let messagesElement1 = document.getElementById('messages');
+        messagesElement1.scrollTop = messagesElement1.scrollHeight;
+
+      }, 2000);
+    });
+  </script>
 
 </body>
 

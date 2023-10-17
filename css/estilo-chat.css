@@ -1,0 +1,487 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ada7a7;
+
+  }
+
+  .chat-container {
+    margin: 0 auto;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    background-color: #e0e0e0;
+    height: 100vh;
+  }
+
+  .messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 480px;
+    overflow-y: auto;
+  }
+
+  .message-container {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+  }
+
+  .own .message-container {
+    align-items: flex-end;
+  }
+
+  .message {
+    background-color: #f6f6f6;
+    color: #333;
+    border-radius: 13px 13px 13px 2px;
+    padding: 12px 18px;
+    max-width: 70%;
+    word-wrap: break-word;
+  }
+
+  .own .message {
+    background-color: #1976d2;
+    color: white;
+  }
+
+  .own .message {
+    align-self: flex-end;
+  }
+
+  .user-name {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #888;
+   
+
+  }
+  .user-item {
+    padding: 5px;
+    white-space: nowrap; /* Impede que o texto seja quebrado em várias linhas */
+    overflow: hidden; /* Oculta o conteúdo que não cabe */
+    text-overflow: ellipsis; /* Exibe três pontos quando o texto é cortado */
+    max-width: 100%; /* Garante que o texto não exceda a largura do contêiner */
+  }
+
+
+  .user-name-center {
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+    color: #888;
+    
+  }
+  .input-container {
+    display: flex;
+    margin-top: 15px;
+  }
+
+  .input-field {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+
+  .input-button {
+    padding: 10px 18px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+
+  h1,
+  h2 {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .messages {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    height: 480px;
+    overflow-y: auto;
+    padding-right: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #ccc transparent;
+  }
+
+  .messages::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .messages::-webkit-scrollbar-thumb {
+    background-color: #bbb;
+    border-radius: 10px;
+  }
+
+  .messages::-webkit-scrollbar-thumb:hover {
+    background-color: #999;
+  }
+
+  .messages::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .own .message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 15px;
+  }
+
+  .own .user-name {
+    text-align: right;
+    /* Alinhar o nome de usuário à direita */
+    color: #888;
+    font-size: 12px;
+    font-weight: bold;
+    margin-bottom: 4px;
+  }
+
+  .own .message {
+    background-color: #f2f2f2;
+    color: #333;
+    border-radius: 15px;
+    padding: 12px 18px;
+    max-width: 70%;
+    word-wrap: break-word;
+    text-align: right;
+    /* Alinhar a mensagem à direita */
+  }
+
+  .own .timestamp {
+    text-align: right;
+    font-size: 10px;
+    color: #888;
+    margin-top: 4px;
+  }
+
+  .own .message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-bottom: 5px;
+
+  }
+
+  .other .message-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin-bottom: 5px;
+    border-radius: 13px 13px 13px 2px;
+  }
+
+  
+
+  .message {
+    border-radius: 15px;
+    padding: 12px 18px;
+    margin-left: 14px;
+    /* max-width: 70%; */ /* Remova ou comente essa linha */
+    width: fit-content; /* Ajusta a largura ao tamanho do conteúdo */
+    word-wrap: break-word;
+    margin-top: 2px;
+    border: 1px solid var(--color-content-ghost,#8c8c8c);
+    border-radius: 13px 13px 13px 2px;
+    max-width: 100%; /* Define a largura máxima como 100% do contêiner pai */
+    max-height: 50vh; 
+ 
+   
+}
+
+
+
+.audio {
+  border-radius: 15px;
+
+  margin-left: 14px;
+  /* max-width: 70%; */ /* Remova ou comente essa linha */
+  width: fit-content; /* Ajusta a largura ao tamanho do conteúdo */
+  word-wrap: break-word;
+  margin-top: 2px;
+ 
+ 
+}
+
+
+
+  .own .message {
+    background-color: #454545;
+    color: white;
+    text-align: right;
+    /* Alinhar a mensagem do próprio usuário à direita */
+  }
+  .own .message {
+    position: relative;
+    margin-bottom: 5px;
+    width: auto;
+    height: 100%;
+    font-size: 16px;
+    font-weight: 400;
+    line-height: 20px;
+    white-space: pre-line;
+
+}
+
+
+.own .audio  {
+ 
+  color: white;
+  text-align: right;
+  /* Alinhar a mensagem do próprio usuário à direita */
+}
+.own .audio {
+  position: relative;
+  margin-bottom: 5px;
+  width: auto;
+  height: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: pre-line;
+  border-radius: 12px 12px 2px 13px;
+}
+
+
+
+
+
+
+.other .message {
+  position: relative;
+  margin-bottom: 1px;
+  margin-left: 14px;
+  width: fit-content;
+  height: 100%;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  white-space: pre-line;
+  border: 1px solid var(--color-content-ghost, #8c8c8c);
+  border-radius: 13px 13px 13px 2px;
+  max-width: 100%; /* Define a largura máxima como 100% do contêiner pai */
+  max-height: 50vh; 
+}
+
+.timestamp {
+  font-size: 10px;
+  color: #888;
+}
+
+.other-timestamp {
+  font-size: 10px;
+  color: #888;
+  position: relative;
+  top: 3px;
+}
+
+.own-timestamp {
+  font-size: 10px;
+  color: #888;
+  position: relative;
+  top: 1px;
+}
+  .system-message {
+    text-align: left;
+    margin-bottom: 10px;
+  }
+
+  .system-message-text {
+
+    border-radius: 8px;
+    padding: 8px 12px;
+    max-width: 70%;
+    word-wrap: break-word;
+  }
+
+  .user-initials {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    font-size: 10px;
+    margin-right: 10px;
+    color: #e5f6ff;
+    z-index: 99999999;
+}
+
+.user-initials-popup {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  font-size: 10px;
+  margin-right: 10px;
+  color: #e5f6ff;
+
+}
+  .mention {
+    background-color: yellow;
+    font-weight: bold;
+  }
+  .user-list-popup {
+    display: none;
+    position: fixed;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999;
+  }
+  
+  .user-list-popup h2 {
+    margin-top: 0;
+  }
+  
+  .user-list-popup ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .user-list-popup li {
+    margin-bottom: 5px;
+  }
+    /* Estilos para o popup */
+    .user-list-popup {
+      display: none;
+      position: fixed;
+      top: 25%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      padding: 20px;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      z-index: 9999;
+      max-height: 70vh;
+      overflow-y: auto;
+    }
+  
+    .user-list-popup h2 {
+      margin-top: 0;
+    }
+  
+    .user-list-popup ul {
+      list-style: none;
+      padding: 0;
+      overflow: hidden;
+    }
+  
+    .user-list-popup li {
+      margin-bottom: 5px;
+      cursor: pointer;
+    }
+  
+    .user-list-scroll {
+      max-height: 200px;
+      overflow-y: auto;
+    }
+    .user-list-scroll::-webkit-scrollbar {
+      width: 8px;
+    }
+  
+   .user-list-scroll::-webkit-scrollbar-thumb {
+      background-color: #bbb;
+      border-radius: 10px;
+    }
+  
+   .user-list-scroll::-webkit-scrollbar-thumb:hover {
+      background-color: #999;
+    }
+  
+   .user-list-scroll::-webkit-scrollbar-track {
+      background-color: transparent;
+    }
+  
+    #search-user {
+      width: 100%;
+      padding: 5px;
+      margin-bottom: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+    }
+/* Esconde o input de arquivo padrão */
+#image-input {
+  display: none;
+}
+
+/* Estilo para o rótulo personalizado */
+.custom-file-upload {
+  display: inline-block;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: transparent;
+  color: rgb(14, 13, 13);
+
+  border-radius: 5px;
+}
+
+.custom-file-upload:hover {
+  background-color: rgba(164, 172, 164, 0.2); 
+}
+
+.popup-container {
+  display: none;
+  position: fixed;
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+  padding: 20px;
+  box-shadow: none;
+  z-index: 9999;
+  width: 80%;
+  height: 50%;
+  overflow: hidden;
+
+}
+
+.popup-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+#webpage-iframe1 {
+
+  margin-left: -2px;
+  margin-top: -30px;
+}
+.splash-screen {
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+height: 100vh; 
+background-color: white; 
+}
+
+.splash-screen img {
+width: 10%; 
+margin-bottom: 20px;
+}
+
+.splash-screen p {
+font-size: 24px;
+color: black;
+}
+
+.hidden {
+display: none;
+}
